@@ -178,7 +178,7 @@ describe('[code-analyzer] › resolve references across multiple files', () => {
     await parseFile('/index.ts', paths, result, 'node_modules');
 
     const transformed = applyTransformers<any>(result)[0].members;
-    expect(transformed[0]).toMatchObject({ type: 'property', key: 'i', value: ['true'] });
+    expect(transformed[0]).toMatchObject({ type: 'property', key: 'i', value: ['true', 'false'] });
     expect(transformed[1]).toMatchObject({ type: 'property', key: 'i2', value: ['1'] });
   });
 
@@ -206,7 +206,7 @@ describe('[code-analyzer] › resolve references across multiple files', () => {
 
     expect(members).toHaveLength(1);
     expect(members).toMatchObject([
-      { type: 'property', key: 'disabled', value: ['true' ]},
+      { type: 'property', key: 'disabled', value: ['true', 'false'] },
     ]);
   });
 
@@ -240,7 +240,7 @@ describe('[code-analyzer] › resolve references across multiple files', () => {
 
     expect(members).toHaveLength(2);
     expect(members).toMatchObject([
-      { type: 'property', key: 'disabled', value: ['true'] },
+      { type: 'property', key: 'disabled', value: ['true', 'false'] },
       // tslint:disable-next-line: quotemark
       { type: 'property', key: 'elementRef', value: ["\"ElementRef\""] },
     ]);
@@ -319,7 +319,7 @@ describe('[code-analyzer] › resolve references across multiple files', () => {
 
     expect(transformed[0].members).toHaveLength(2);
     expect(transformed[0].members).toMatchObject([
-      { type: 'property', key: 'required', value: ['true'] },
+      { type: 'property', key: 'required', value: ['true', 'false'] },
       {
         type: 'method',
         key: 'required',
@@ -364,8 +364,8 @@ describe('[code-analyzer] › resolve references across multiple files', () => {
 
     expect(transformed[0].members).toHaveLength(3);
     expect(transformed[0].members).toMatchObject([
-      { type: 'property', key: 'disabled', value: ['true'] },
-      { type: 'property', key: 'variant', value: ['true'] },
+      { type: 'property', key: 'disabled', value: ['true', 'false'] },
+      { type: 'property', key: 'variant', value: ['true', 'false'] },
       {
         type: 'method',
         key: 'variant',
@@ -409,7 +409,7 @@ describe('[code-analyzer] › resolve references across multiple files', () => {
 
     expect(transformed[0].members).toHaveLength(1);
     expect(transformed[0].members).toMatchObject([
-      { type: 'property', key: 'disabled', value: ['true'] },
+      { type: 'property', key: 'disabled', value: ['true', 'false'] },
     ]);
   });
 

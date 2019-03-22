@@ -55,7 +55,7 @@ describe('[code-analyzer] › MetaResolver › drop irrelevant root nodes', () =
         {
           type: 'property',
           key: 'member',
-          value: ['true'],
+          value: ['true', 'false'],
         },
         {
           type: 'method',
@@ -227,7 +227,7 @@ describe('[code-analyzer] › MetaResolver › resolving all different nodes', (
     const nodes = resolveReferences(result).nodes as any[];
     const resolved = nodes[2].visit(jsonResolver);
     expect(resolved.returnType).toMatchObject([
-      { type: 'property', key: 'a', value: ['true'] },
+      { type: 'property', key: 'a', value: ['true', 'false'] },
       { type: 'property', key: 'b', value: ['1'] },
     ]);
   });
@@ -478,7 +478,7 @@ test('resolving a full fledged Button component', async () => {
       expect.objectContaining({
         type: 'property',
         key: 'disabled',
-        value: ['true'],
+        value: ['true', 'false'],
       }),
       expect.objectContaining({
         type: 'property',
