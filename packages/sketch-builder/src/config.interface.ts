@@ -8,6 +8,7 @@ export interface SketchBuilderConfig {
   pages?: string[];
   previewImage?: string;
   rootElement?: string;
+  objectIdMapping?: string;
 }
 
 export interface Library {

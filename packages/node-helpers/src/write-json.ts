@@ -1,4 +1,4 @@
-import { extname, dirname } from 'path';
+import { extname } from 'path';
 import { writeFile } from './write-file';
 
 /**
@@ -11,7 +11,6 @@ import { writeFile } from './write-file';
 export function writeJSON(filename: string, content: Object | string, pretty = false): Promise<boolean | Error> {
   const _content = (typeof content === 'string') ? content : createJSON(content, pretty);
   const ext = extname(filename);
-  const dir = dirname(filename);
   const f = ext.length > 0 ? filename : `${filename}.json`;
 
   return writeFile(f, _content);

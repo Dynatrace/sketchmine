@@ -1,20 +1,15 @@
-import chalk from 'chalk';
-import puppeteer from 'puppeteer';
+import { Component, Library } from '@sketchmine/code-analyzer';
+import { ITraversedElement, TraversedLibrary, TraversedPage, TraversedSymbol } from '@sketchmine/dom-agent';
+import { Logger, readFile } from '@sketchmine/node-helpers';
 import { Sketch } from '@sketchmine/sketch-file-builder';
-import { Drawer } from './drawer';
-import {
-  ITraversedElement,
-  TraversedLibrary,
-  TraversedPage,
-  TraversedSymbol,
-} from '@sketchmine/dom-agent';
+import chalk from 'chalk';
 import { exec } from 'child_process';
-import { SketchBuilderConfig } from './config.interface';
-import { readFile, Logger } from '@sketchmine/node-helpers';
-import { sketchGeneratorApi } from './builder-api';
-import { Library, Component,
-} from '@sketchmine/code-analyzer';
 import { resolve } from 'path';
+import puppeteer from 'puppeteer';
+import { sketchGeneratorApi } from './builder-api';
+import { SketchBuilderConfig } from './config.interface';
+import { Drawer } from './drawer';
+import { ObjectIdMapping } from './interfaces';
 
 declare const window: any;
 const log = new Logger();
@@ -28,12 +23,25 @@ const LOCAL_RESULT_PATH = resolve('tests/fixtures/library.json');
 export class ElementFetcher {
   // private _assetHsandler: AssetHandler = new AssetHandler();
   result: (TraversedPage | TraversedLibrary)[] = [];
+  private idMapping: ObjectIdMapping;
 
   constructor(public conf: SketchBuilderConfig, public meta?: Library) {}
 
+  set objectIdMapping(value: string) {
+    try {
+      this.idMapping = JSON.parse(value) as ObjectIdMapping;
+    } catch {
+      throw new Error('Could not parse objectIdMapping.json file.');
+    }
+  }
+
+  get objectIdMapping(): string {
+    return JSON.stringify(this.idMapping);
+  }
+
   async generateSketchFile(): Promise<number> {
     this.sortSymbols();
-    const drawer = new Drawer();
+    const drawer = new Drawer(this.idMapping);
     const sketch = new Sketch(
       this.conf.previewImage || 'assets/preview.png',
       this.conf.outFile,
@@ -54,6 +62,7 @@ export class ElementFetcher {
         }
       });
     }
+
     // TODO: add asset handler
     // if (this.hasAssets()) {
     //   sketch.prepareFolders();
@@ -61,6 +70,9 @@ export class ElementFetcher {
     // }
     await sketch.write([symbolsMaster, ...pages]);
     sketch.cleanup();
+
+    // Get objectIdMapping file from drawer
+    this.objectIdMapping = JSON.stringify(drawer.idMapping);
 
     if (process.env.SKETCH === 'open-close') {
       exec(`open ${this.conf.outFile}`);

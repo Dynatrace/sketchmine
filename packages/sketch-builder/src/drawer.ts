@@ -14,6 +14,8 @@ import {
 import { Logger } from '@sketchmine/node-helpers';
 import { ElementDrawer } from './element-drawer';
 import chalk from 'chalk';
+import { ObjectIdMapping } from './interfaces';
+import { getObjectId, setObjectId } from './helpers';
 
 const log = new Logger();
 const SYMBOL_ARTBOARD_MARGIN: number = 40;
@@ -81,8 +83,14 @@ function sortSymbols(symbols: TraversedSymbol[]): SymbolsPage {
 
 export class Drawer {
 
-  /** Map of Symbols that are drawn with name and id */
+  // Map of Symbols that are drawn with name and id
   drawnSymbols = new Map<string, string>();
+
+  constructor(private _idMapping: ObjectIdMapping | undefined) {}
+
+  get idMapping(): ObjectIdMapping | undefined {
+    return this._idMapping;
+  }
 
   drawSymbols(library: TraversedLibrary): Page {
     const symbolsPage = sortSymbols(library.symbols as TraversedSymbol[]);
@@ -96,6 +104,19 @@ export class Drawer {
 
       const symbolMaster = new SymbolMaster(size);
       symbolMaster.name = symbol.name;
+
+      // Check if symbol has already been created and keep existing ID.
+      // If symbol is new, add newly added object ID to mapping file.
+      const storedObjectId = getObjectId(symbolMaster.name, this._idMapping);
+      if (storedObjectId !== undefined) {
+        // tslint:disable-next-line max-line-length
+        log.debug(chalk`Symbol {greenBright ${symbol.name}} already exists, objectID {greenBright ${storedObjectId}} is reused.`);
+        symbolMaster.objectID = storedObjectId;
+      } else {
+        // tslint:disable-next-line max-line-length
+        log.debug(chalk`Symbol {greenBright ${symbol.name}} is new, objectID {greenBright ${symbolMaster.objectID}} is generated.`);
+        this._idMapping = setObjectId(symbolMaster.name, symbolMaster.objectID, this._idMapping);
+      }
 
       if (symbol.symbol) {
         symbolMaster.layers = this.drawElements(symbol.symbol);

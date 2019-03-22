@@ -1,6 +1,6 @@
 {
   "metaInformation": "path/to/meta-information.json",
-  "url": "htt://localhost:4200",
+  "url": "http://localhost:4200/",
   "rootElement": "ng-component > * ",
   "library": {
     "app": "/path/to/angular-app/from/app-builder"
