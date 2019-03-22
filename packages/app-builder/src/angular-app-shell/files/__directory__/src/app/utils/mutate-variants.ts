@@ -35,36 +35,37 @@ export function singleVariantGenerator(baseName: string, theme: string, variants
   return result;
 }
 
-export function variantCombinationGenerator(baseName: string, theme: string, variants: Property[]): any[] {
-  if (!variants || !Array.isArray(variants) || !variants.length) {
+/**
+ * Takes a set of properties and generates all possible property value combinations.
+ * How the property values are sorted is not relevant.
+ * @param baseName - Component base name (e.g. "button").
+ * @param theme - Theme property (e.g. "light-bg").
+ * @param properties - Array of properties.
+ * @return – An array of ...
+ */
+export function variantCombinationGenerator(baseName: string, theme: string, properties: Property[]): any[] {
+  if (!properties || !Array.isArray(properties) || !properties.length) {
     return [];
   }
   const result = [];
-  const length = variants.length - 1;
-
-  // add undefined to mutate single values as well
-  variants.forEach((variant) => {
-    // only add undefined if it is not there otherwise we get duplicates
-    if (!variant.value.includes(undefined)) {
-      variant.value.push(undefined);
-    }
-  });
+  const lastPropertyIndex = properties.length - 1;
 
   function helper(changes: any[], i: number) {
-    const variant = variants[i];
+    const property = properties[i];
+    const noOfPropertyValues = property.value.length;
 
-    for (let j = 0, l = variant.value.length; j < l; j += 1) {
-      const value = variant.value[j];
+    for (let j = 0; j < noOfPropertyValues; j += 1) {
+      const value = property.value[j];
       const newChanges = changes.slice(0); // clone arr
 
-      if (value && value !== 'undefined') {
+      if (value) {
         newChanges.push({
-          type: variant.type,
-          key: variant.key,
+          type: property.type,
+          key: property.key,
           value,
         });
       }
-      if (i === length) {
+      if (i === lastPropertyIndex) {
         if (newChanges.length) {
           result.push({
             name: generateVariantName(baseName, theme, newChanges),

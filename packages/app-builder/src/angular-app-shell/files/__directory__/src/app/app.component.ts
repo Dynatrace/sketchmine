@@ -66,7 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
             });
           } else {
             // if there are no variants from the parser instance it with the defaults
-            const variant = { name: `${componentMeta.component}/default`, changes: [] };
+            const variant = { name: `${componentMeta.component}/${this.currentTheme}/default`, changes: [] };
             await this.applyChange(componentMeta, variant, components);
           }
         });

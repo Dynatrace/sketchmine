@@ -54,10 +54,10 @@ const ANGULAR_LIFE_CYCLE_METHODS = [
  * Resolve primitive values like booleans to true in case that
  * we need the possible variants and false would be default.
  */
-function resolvePrimitiveType(nodeType: ParsePrimitiveType): string | null {
+function resolvePrimitiveType(nodeType: ParsePrimitiveType): string[] | null {
   switch (nodeType.type) {
     case Primitives.Boolean:
-      return 'true';
+      return ['true', 'false'];
     default:
       // don't resolve undefined and null Values we dont need the undefined or null state
       return null;

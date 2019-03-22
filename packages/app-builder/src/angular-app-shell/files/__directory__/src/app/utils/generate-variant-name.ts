@@ -2,6 +2,7 @@ import { kebabCase } from 'lodash';
 import { VariantChange } from '../app.component';
 
 const ACTIONS = ['disabled', 'active', 'hover', 'click'];
+const DEFAULT_STATE = 'default';
 
 /**
  * generates a name for the sketch symbol out of the changes array
@@ -18,25 +19,26 @@ export function generateVariantName(base: string, theme: string, changes: Varian
   const parts = [];
   const actions = [];
 
-  changes.forEach((change: VariantChange) => {
+  changes
+    .sort((a, b) => (a.key > b.key) ? 1 : ((b.key > a.key) ? -1 : 0))
+    .forEach((change: VariantChange) => {
 
-    if (change.type === 'property') {
-      const name = parseValue(change);
-      if (ACTIONS.includes(change.key)) {
-        actions.push(name);
+      if (change.type === 'property') {
+        const name = `/${parseValue(change)}`;
+        if (ACTIONS.includes(change.key)) {
+          actions.push(name);
+        } else {
+          parts.push(name);
+        }
       } else {
-        parts.push(name);
+        throw Error(`The Variant with the type: ${change.type} is not handled yet!`);
       }
-    } else {
-      throw Error(`The Variant with the type: ${change.type} is not handled yet!`);
-    }
-  });
+    });
 
-  parts.sort();
   actions.sort();
 
-  const actionPart = actions.length ? `/${actions.join('/')}` : '/default';
-  const variantPart = parts.length ? `/${parts.join('/')}` : '';
+  const actionPart = actions.length ? `${actions.join('')}` : `/${DEFAULT_STATE}`;
+  const variantPart = parts.length ? `${parts.join('')}` : '';
   const basePart = kebabCase(base);
 
   return `${basePart}/${theme}${variantPart}${actionPart}`;
@@ -58,11 +60,11 @@ function parseValue(change: VariantChange): string {
   try {
     val = JSON.parse(change.value);
   } catch (e) {
-    throw new Error(`generate-variant-name.ts › parseBooleanValue() => Cannot JSON.parse: ${change.value}`);
+    throw new Error(`generate-variant-name.ts › parseValue() => Cannot JSON.parse: ${change.value}`);
   }
 
   switch (typeof val) {
-    case 'boolean': return change.key;
+    case 'boolean': return val ? change.key : DEFAULT_STATE;
     case 'number' : return `${change.key}-${change.value}`;
   }
   return change.value.replace(/\"/g, '');
