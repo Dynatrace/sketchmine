@@ -60,7 +60,7 @@ describe('[code-analyzer] › MetaResolver › drop irrelevant root nodes', () =
         {
           type: 'method',
           key: 'member',
-          parameters: [{ type: 'property', key: 'value', value: ['true'] }],
+          parameters: [{ type: 'property', key: 'value', value: ['true', 'false'] }],
         },
       ],
     });
@@ -174,12 +174,12 @@ describe('[code-analyzer] › MetaResolver › resolving all different nodes', (
     });
   });
 
-  test('a boolean type should be resolved into a stringified true', () => {
+  test('a boolean type should be resolved into an array of stringified true- and false-values', () => {
     const source = 'let a:boolean';
     const result = getParsedResult(source) as any;
     const nodes = resolveReferences(result).nodes as any[];
     const resolved = nodes[0].visit(jsonResolver);
-    expect(resolved).toBe('true');
+    expect(resolved).toMatchObject(['true', 'false']);
   });
 
   test('null as type should be resolved into a stringified null value', () => {

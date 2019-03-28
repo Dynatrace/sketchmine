@@ -324,7 +324,7 @@ describe('[code-analyzer] › resolve references across multiple files', () => {
         type: 'method',
         key: 'required',
         parameters: [
-          { type: 'property', key: 'value', value: ['true'] },
+          { type: 'property', key: 'value', value: ['true', 'false'] },
         ],
       },
     ]);
@@ -370,7 +370,7 @@ describe('[code-analyzer] › resolve references across multiple files', () => {
         type: 'method',
         key: 'variant',
         parameters: [
-          { type: 'property', key: 'value', value: ['true'] },
+          { type: 'property', key: 'value', value: ['true', 'false'] },
         ],
       },
     ]);
