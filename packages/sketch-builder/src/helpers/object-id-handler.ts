@@ -40,3 +40,15 @@ export function setObjectId(symbolName: string, objectId: string, objectIdMappin
 
   return newObjectIdMapping;
 }
+
+/**
+ * @param objectIdMapping - The idMapping object.
+ * @returns the library ID when given in the idMapping object, undefined else.
+ */
+export function getLibraryId(objectIdMapping: ObjectIdMapping) {
+  if (objectIdMapping && objectIdMapping.libraryId) {
+    return objectIdMapping.libraryId;
+  }
+
+  return;
+}

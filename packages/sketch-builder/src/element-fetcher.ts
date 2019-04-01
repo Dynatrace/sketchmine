@@ -9,6 +9,7 @@ import puppeteer from 'puppeteer';
 import { sketchGeneratorApi } from './builder-api';
 import { SketchBuilderConfig } from './config.interface';
 import { Drawer } from './drawer';
+import { getLibraryId } from './helpers/object-id-handler';
 import { ObjectIdMapping } from './interfaces';
 
 declare const window: any;
@@ -45,6 +46,8 @@ export class ElementFetcher {
     const sketch = new Sketch(
       this.conf.previewImage || 'assets/preview.png',
       this.conf.outFile,
+      this.conf.library !== undefined,
+      getLibraryId(this.idMapping),
     );
     const pages = [];
     let symbolsMaster = drawer.drawSymbols({ symbols: [] } as any);
@@ -68,11 +71,15 @@ export class ElementFetcher {
     //   sketch.prepareFolders();
     //   await this.downloadAssets();
     // }
-    await sketch.write([symbolsMaster, ...pages]);
+
+    const documentObjectId = await sketch.write([symbolsMaster, ...pages]);
     sketch.cleanup();
 
-    // Get objectIdMapping file from drawer
-    this.objectIdMapping = JSON.stringify(drawer.idMapping);
+    // Get objectIdMapping file from drawer after new elements have been drawn.
+    if (drawer.idMapping) {
+      drawer.idMapping.libraryId = documentObjectId;
+      this.objectIdMapping = JSON.stringify(drawer.idMapping);
+    }
 
     if (process.env.SKETCH === 'open-close') {
       exec(`open ${this.conf.outFile}`);
