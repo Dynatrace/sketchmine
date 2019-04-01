@@ -1,8 +1,10 @@
-import { copyFile, createDir, delDir, writeJSON } from '@sketchmine/node-helpers';
+import { copyFile, createDir, delDir, Logger, writeJSON } from '@sketchmine/node-helpers';
 import { generateSketchFile } from './generate-sketch-file';
 import { Document, Meta, Page } from '@sketchmine/sketch-file-format';
 import { dirname, resolve, basename, join } from 'path';
 import chalk from 'chalk';
+
+const log = new Logger();
 
 export class Sketch {
   private static TMP_PATH = resolve('_sketch_tmp');
@@ -12,17 +14,27 @@ export class Sketch {
   constructor(
     public previewImage: string,
     outFile?: string,
+    private _generateLibrary?: boolean,
+    private _libraryId?: string,
   ) {
     this._outDir = dirname(outFile) || './';
     this._fileName = basename(outFile, '.sketch') || 'dt-asset-lib';
   }
 
-  async write(pages: Page[]): Promise<any> {
-    const doc = new Document(pages);
+  /**
+   * Generates and writes the Sketch file based on given pages,
+   * a created document- and meta-object.
+   * @param pages - Sketch pages.
+   * @returns – The document's object ID of the newly created Sketch file.
+   */
+  async write(pages: Page[]): Promise<string> {
+    const doc = this.generateDocument(pages);
     const meta = new Meta(pages);
 
     await this.generateFolderStructure(pages, doc, meta);
-    return generateSketchFile(this._outDir, this._fileName, Sketch.TMP_PATH);
+    await generateSketchFile(this._outDir, this._fileName, Sketch.TMP_PATH);
+
+    return doc.getObjectId();
   }
 
   /**
@@ -41,6 +53,21 @@ export class Sketch {
     createDir(join(Sketch.TMP_PATH, 'pages'));
     createDir(join(Sketch.TMP_PATH, 'previews'));
     createDir(join(Sketch.TMP_PATH, 'images'));
+  }
+
+  /**
+   * Generates a new document and sets the library ID when already defined.
+   * @param pages – Sketch pages.
+   * @returns The generated document.
+   */
+  private generateDocument(pages: Page[]): Document {
+    log.debug(chalk`\n\n\t{yellow ——— GENERATING DOCUMENT ———}\n`);
+    if (this._generateLibrary && this._libraryId) {
+      log.debug(chalk`Library ID {greenBright ${this._libraryId}} already exists and is reused.`);
+      return new Document(pages, this._libraryId);
+    }
+    log.debug('Library is new, ID is generated.');
+    return new Document(pages);
   }
 
   /**

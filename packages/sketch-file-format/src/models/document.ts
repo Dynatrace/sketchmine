@@ -4,15 +4,16 @@ import { Page } from './page';
 
 export class Document {
   private static _instance: Document;
-  private static _objectID = UUID.generate();
   private _pages = [];
+  private _objectID: string;
 
-  constructor(pages: Page[]) {
+  constructor(pages: Page[], objectID = UUID.generate()) {
     if (Document._instance) {
       return Document._instance;
     }
     Document._instance = this;
     this._pages = [...pages];
+    this._objectID = objectID;
   }
 
   private addPages(): SketchDocumentPage[] {
@@ -41,10 +42,14 @@ export class Document {
     };
   }
 
+  getObjectId(): string {
+    return this._objectID;
+  }
+
   generateObject(): SketchDocument {
     return {
       _class: 'document',
-      do_objectID: Document._objectID,
+      do_objectID: this._objectID,
       assets: this.addAssets(),
       colorSpace: 0,
       currentPageIndex: 0,
