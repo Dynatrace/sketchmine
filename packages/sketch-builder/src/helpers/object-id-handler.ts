@@ -15,7 +15,7 @@ export function getObjectId(symbolName: string, objectIdMapping: ObjectIdMapping
   }
   return objectId;
 
-  // TODO: what about if name partes are sorted differently?
+  // TODO: what about if name parts are sorted differently? (e.g. button/primary/main instead of button/main/primary)
 }
 
 /**
@@ -29,8 +29,6 @@ export function setObjectId(symbolName: string, objectId: string, objectIdMappin
   const newObjectIdMapping = Object.assign({}, objectIdMapping);
 
   if (Object.keys(newObjectIdMapping).length < 1) {
-    // TODO: get the correct version number here & update version on each generation!
-    newObjectIdMapping.version = '0.0.0';
     newObjectIdMapping.symbols = {};
   }
 

@@ -46,9 +46,13 @@ export class ElementFetcher {
     const sketch = new Sketch(
       this.conf.previewImage || 'assets/preview.png',
       this.conf.outFile,
-      this.conf.library !== undefined,
-      getLibraryId(this.idMapping),
     );
+
+    // set library ID when library information is given in the config file
+    if (this.conf.library !== undefined) {
+      sketch.libraryId = getLibraryId(this.idMapping);
+    }
+
     const pages = [];
     let symbolsMaster = drawer.drawSymbols({ symbols: [] } as any);
 
@@ -77,6 +81,9 @@ export class ElementFetcher {
 
     // Get objectIdMapping file from drawer after new elements have been drawn.
     if (drawer.idMapping) {
+      if (this.conf.library && this.conf.library.version) {
+        drawer.idMapping.version = this.conf.library.version;
+      }
       drawer.idMapping.libraryId = documentObjectId;
       this.objectIdMapping = JSON.stringify(drawer.idMapping);
     }

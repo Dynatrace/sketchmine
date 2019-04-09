@@ -10,12 +10,11 @@ export class Sketch {
   private static TMP_PATH = resolve('_sketch_tmp');
   private _outDir: string;
   private _fileName: string;
+  libraryId: string;
 
   constructor(
     public previewImage: string,
     outFile?: string,
-    private _generateLibrary?: boolean,
-    private _libraryId?: string,
   ) {
     this._outDir = dirname(outFile) || './';
     this._fileName = basename(outFile, '.sketch') || 'dt-asset-lib';
@@ -62,9 +61,9 @@ export class Sketch {
    */
   private generateDocument(pages: Page[]): Document {
     log.debug(chalk`\n\n\t{yellow ——— GENERATING DOCUMENT ———}\n`);
-    if (this._generateLibrary && this._libraryId) {
-      log.debug(chalk`Library ID {greenBright ${this._libraryId}} already exists and is reused.`);
-      return new Document(pages, this._libraryId);
+    if (!!this.libraryId) {
+      log.debug(chalk`Library ID {greenBright ${this.libraryId}} already exists and is reused.`);
+      return new Document(pages, this.libraryId);
     }
     log.debug('Library is new, ID is generated.');
     return new Document(pages);
