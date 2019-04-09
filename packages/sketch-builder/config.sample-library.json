@@ -3,7 +3,8 @@
   "url": "http://localhost:4200/",
   "rootElement": "ng-component > * ",
   "library": {
-    "app": "/path/to/angular-app/from/app-builder"
+    "app": "/path/to/angular-app/from/app-builder",
+    "objectIdMapping": "/path/to/objectIdMapping.json"
   },
   "previewImage": "assets/preview.png",
   "outFile": "out/dir/library.sketch"

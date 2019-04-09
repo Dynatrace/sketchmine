@@ -36,6 +36,11 @@ export async function commandLineExecutor(): Promise<number> {
   // the meta option is optional in the main function
   let meta: Library;
 
+  // set the library version when given
+  if (!!process.env.LIBRARY_VERSION && config.library) {
+    config.library.version = process.env.LIBRARY_VERSION;
+  }
+
   /**
    * you can provide the meta information, it will be used to detect
    * symbols from the library to reference them in the sketch file instead of redrawing

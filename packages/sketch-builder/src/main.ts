@@ -32,8 +32,8 @@ export async function main(config: SketchBuilderConfig, meta?: Library | undefin
   const elementFetcher = new ElementFetcher(config, meta);
 
   // Read objectIdMapping file if it exists and pass it to the element fetcher
-  if (config.objectIdMapping && isFile(config.objectIdMapping)) {
-    const objectIdMapping = await readFile(config.objectIdMapping);
+  if (config.library && config.library.objectIdMapping && isFile(config.library.objectIdMapping)) {
+    const objectIdMapping = await readFile(config.library.objectIdMapping);
     if (objectIdMapping.length) {
       elementFetcher.objectIdMapping = objectIdMapping;
     }
@@ -55,8 +55,8 @@ export async function main(config: SketchBuilderConfig, meta?: Library | undefin
   const exitCode = await elementFetcher.generateSketchFile();
 
   // Write (updated) objectIdMapping file.
-  if (config.objectIdMapping && elementFetcher.objectIdMapping) {
-    await writeJSON(config.objectIdMapping, elementFetcher.objectIdMapping);
+  if (config.library && config.library.objectIdMapping && elementFetcher.objectIdMapping) {
+    await writeJSON(config.library.objectIdMapping, elementFetcher.objectIdMapping);
   }
 
   if (!process.env.DEBUG) {
