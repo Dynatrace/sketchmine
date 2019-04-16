@@ -7,4 +7,5 @@ export interface ObjectIdMapping {
 
 export interface ObjectIdMappingSymbol {
   objectId: string;
+  changeIdentifier: number;
 }

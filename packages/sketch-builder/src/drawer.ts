@@ -107,6 +107,10 @@ export class Drawer {
           // tslint:disable-next-line max-line-length
           log.debug(chalk`Symbol {greenBright ${symbolMaster.name}} already exists, objectID {greenBright ${storedObjectId}} is reused.`);
           symbolMaster.objectID = storedObjectId;
+          // update change identifier of symbolMaster and in idMapping
+          const changeIdentifier = this.idMapping.symbols[symbolMaster.name].changeIdentifier;
+          this.idMapping.symbols[symbolMaster.name].changeIdentifier = changeIdentifier + 1;
+          symbolMaster.changeIdentifier = changeIdentifier + 1;
         } else {
           // tslint:disable-next-line max-line-length
           log.debug(chalk`Symbol {greenBright ${symbolMaster.name}} is new, objectID {greenBright ${symbolMaster.objectID}} is generated.`);

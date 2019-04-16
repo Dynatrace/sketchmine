@@ -4,6 +4,7 @@ import { Style } from './style';
 import { addBackgroundColor } from './artboard';
 
 export class SymbolMaster extends Base {
+  changeIdentifier = 1;
 
   constructor(bounding: IBounding) {
     super(bounding);
@@ -28,7 +29,7 @@ export class SymbolMaster extends Base {
       verticalRulerData: super.addRuler(),
       includeBackgroundColorInInstance: false,
       symbolID: base.do_objectID,
-      changeIdentifier: 3,
+      changeIdentifier: this.changeIdentifier,
     };
   }
 }

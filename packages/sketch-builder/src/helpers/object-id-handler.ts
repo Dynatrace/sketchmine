@@ -35,6 +35,7 @@ export function setObjectId(symbolName: string, objectId: string, objectIdMappin
 
   newObjectIdMapping.symbols[symbolName] = {
     objectId,
+    changeIdentifier: 1,
   };
 
   return newObjectIdMapping;
