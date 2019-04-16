@@ -5,6 +5,7 @@ import { exec } from 'child_process';
 import ora from 'ora';
 import { SketchBuilderConfig } from './config.interface';
 import { ElementFetcher } from './element-fetcher';
+import { ObjectIdMapping } from './interfaces';
 
 /**
  * @description the main entry point of this package
@@ -32,10 +33,18 @@ export async function main(config: SketchBuilderConfig, meta?: Library | undefin
   const elementFetcher = new ElementFetcher(config, meta);
 
   // Read objectIdMapping file if it exists and pass it to the element fetcher
-  if (config.library && config.library.objectIdMapping && isFile(config.library.objectIdMapping)) {
-    const objectIdMapping = await readFile(config.library.objectIdMapping);
-    if (objectIdMapping.length) {
-      elementFetcher.objectIdMapping = objectIdMapping;
+  if (config.library && config.library.objectIdMapping) {
+    if (isFile(config.library.objectIdMapping)) {
+      const objectIdMapping = await readFile(config.library.objectIdMapping);
+      if (objectIdMapping.length) {
+        try {
+          elementFetcher.idMapping = JSON.parse(objectIdMapping) as ObjectIdMapping;
+        } catch {
+          throw new Error('Could not parse objectIdMapping.json file.');
+        }
+      }
+    } else {
+      elementFetcher.idMapping = {} as ObjectIdMapping;
     }
   }
 
@@ -55,8 +64,8 @@ export async function main(config: SketchBuilderConfig, meta?: Library | undefin
   const exitCode = await elementFetcher.generateSketchFile();
 
   // Write (updated) objectIdMapping file.
-  if (config.library && config.library.objectIdMapping && elementFetcher.objectIdMapping) {
-    await writeJSON(config.library.objectIdMapping, elementFetcher.objectIdMapping);
+  if (elementFetcher.idMapping) {
+    await writeJSON(config.library.objectIdMapping, elementFetcher.idMapping);
   }
 
   if (!process.env.DEBUG) {

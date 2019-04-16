@@ -85,12 +85,7 @@ export class Drawer {
 
   // Map of Symbols that are drawn with name and id
   drawnSymbols = new Map<string, string>();
-
-  constructor(private _idMapping: ObjectIdMapping | undefined) {}
-
-  get idMapping(): ObjectIdMapping | undefined {
-    return this._idMapping;
-  }
+  idMapping: ObjectIdMapping;
 
   drawSymbols(library: TraversedLibrary): Page {
     const symbolsPage = sortSymbols(library.symbols as TraversedSymbol[]);
@@ -105,17 +100,18 @@ export class Drawer {
       const symbolMaster = new SymbolMaster(size);
       symbolMaster.name = symbol.name;
 
-      // Check if symbol has already been created and keep existing ID.
-      // If symbol is new, add newly added object ID to mapping file.
-      const storedObjectId = getObjectId(symbolMaster.name, this._idMapping);
-      if (storedObjectId !== undefined) {
-        // tslint:disable-next-line max-line-length
-        log.debug(chalk`Symbol {greenBright ${symbol.name}} already exists, objectID {greenBright ${storedObjectId}} is reused.`);
-        symbolMaster.objectID = storedObjectId;
-      } else {
-        // tslint:disable-next-line max-line-length
-        log.debug(chalk`Symbol {greenBright ${symbol.name}} is new, objectID {greenBright ${symbolMaster.objectID}} is generated.`);
-        this._idMapping = setObjectId(symbolMaster.name, symbolMaster.objectID, this._idMapping);
+      // Update symbol's objectId according to given id-mapping file
+      if (!!this.idMapping) {
+        const storedObjectId = getObjectId(symbolMaster.name, this.idMapping);
+        if (!!storedObjectId) {
+          // tslint:disable-next-line max-line-length
+          log.debug(chalk`Symbol {greenBright ${symbolMaster.name}} already exists, objectID {greenBright ${storedObjectId}} is reused.`);
+          symbolMaster.objectID = storedObjectId;
+        } else {
+          // tslint:disable-next-line max-line-length
+          log.debug(chalk`Symbol {greenBright ${symbolMaster.name}} is new, objectID {greenBright ${symbolMaster.objectID}} is generated.`);
+          this.idMapping = setObjectId(symbolMaster.name, symbolMaster.objectID, this.idMapping);
+        }
       }
 
       if (symbol.symbol) {

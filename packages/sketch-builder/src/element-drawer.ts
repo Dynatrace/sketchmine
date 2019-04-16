@@ -98,6 +98,7 @@ export class ElementDrawer {
     if (process.env.DEBUG) {
       console.log(chalk`\tAdd Text 📝  with Text: "{yellowBright ${element.text}}"`, paddedBCR);
     }
+
     const text = new Text(paddedBCR, element.styles);
     text.text = element.text;
     this.layers.push(text.generateObject());

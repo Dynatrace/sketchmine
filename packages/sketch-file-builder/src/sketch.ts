@@ -33,7 +33,7 @@ export class Sketch {
     await this.generateFolderStructure(pages, doc, meta);
     await generateSketchFile(this._outDir, this._fileName, Sketch.TMP_PATH);
 
-    return doc.getObjectId();
+    return doc.objectID;
   }
 
   /**

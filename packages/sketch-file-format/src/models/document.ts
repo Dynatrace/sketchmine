@@ -5,15 +5,15 @@ import { Page } from './page';
 export class Document {
   private static _instance: Document;
   private _pages = [];
-  private _objectID: string;
+  objectID: string;
 
-  constructor(pages: Page[], objectID = UUID.generate()) {
+  constructor(pages: Page[], id?: string) {
     if (Document._instance) {
       return Document._instance;
     }
     Document._instance = this;
     this._pages = [...pages];
-    this._objectID = objectID;
+    this.objectID = id ? id : UUID.generate();
   }
 
   private addPages(): SketchDocumentPage[] {
@@ -42,14 +42,10 @@ export class Document {
     };
   }
 
-  getObjectId(): string {
-    return this._objectID;
-  }
-
   generateObject(): SketchDocument {
     return {
       _class: 'document',
-      do_objectID: this._objectID,
+      do_objectID: this.objectID,
       assets: this.addAssets(),
       colorSpace: 0,
       currentPageIndex: 0,

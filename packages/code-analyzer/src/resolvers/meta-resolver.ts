@@ -51,8 +51,8 @@ const ANGULAR_LIFE_CYCLE_METHODS = [
 
 /**
  * @description
- * Resolve primitive values like booleans to true in case that
- * we need the possible variants and false would be default.
+ * Resolve primitive values like booleans to true/false in case that
+ * we need the possible variants.
  */
 function resolvePrimitiveType(nodeType: ParsePrimitiveType): string[] | null {
   switch (nodeType.type) {
