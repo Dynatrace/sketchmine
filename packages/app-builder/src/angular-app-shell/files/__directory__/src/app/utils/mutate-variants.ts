@@ -1,4 +1,4 @@
-import { Component, Method, Property } from '@sketchmine/code-analyzer';
+import { Component, Property } from '@sketchmine/code-analyzer';
 import { generateVariantName } from './generate-variant-name';
 
 export function mutateVariants(component: Component, theme: string) {
@@ -41,7 +41,7 @@ export function singleVariantGenerator(baseName: string, theme: string, variants
  * @param baseName - Component base name (e.g. "button").
  * @param theme - Theme property (e.g. "light-bg").
  * @param properties - Array of properties.
- * @return – An array of ...
+ * @return – An array of all possible component variants based on the combination of all given properties.
  */
 export function variantCombinationGenerator(baseName: string, theme: string, properties: Property[]): any[] {
   if (!properties || !Array.isArray(properties) || !properties.length) {

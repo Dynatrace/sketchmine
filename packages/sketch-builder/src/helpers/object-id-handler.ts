@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash/cloneDeep';
 import { ObjectIdMapping } from '../interfaces';
 
 // TODO: what about default aliases? button == button/main == button/main/primary...
@@ -26,7 +27,7 @@ export function getObjectId(symbolName: string, objectIdMapping: ObjectIdMapping
  * @returns The updated idMapping object.
  */
 export function setObjectId(symbolName: string, objectId: string, objectIdMapping: ObjectIdMapping): ObjectIdMapping {
-  const newObjectIdMapping = Object.assign({}, objectIdMapping);
+  const newObjectIdMapping = cloneDeep(objectIdMapping) || {} as ObjectIdMapping;
 
   if (Object.keys(newObjectIdMapping).length < 1) {
     newObjectIdMapping.symbols = {};
@@ -43,7 +44,7 @@ export function setObjectId(symbolName: string, objectId: string, objectIdMappin
  * @param objectIdMapping - The idMapping object.
  * @returns the library ID when given in the idMapping object, undefined else.
  */
-export function getLibraryId(objectIdMapping: ObjectIdMapping) {
+export function getLibraryId(objectIdMapping: ObjectIdMapping): string | undefined {
   if (objectIdMapping && objectIdMapping.libraryId) {
     return objectIdMapping.libraryId;
   }

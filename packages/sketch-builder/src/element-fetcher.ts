@@ -24,25 +24,13 @@ const LOCAL_RESULT_PATH = resolve('tests/fixtures/library.json');
 export class ElementFetcher {
   // private _assetHsandler: AssetHandler = new AssetHandler();
   result: (TraversedPage | TraversedLibrary)[] = [];
-  private idMapping: ObjectIdMapping;
+  public idMapping: ObjectIdMapping;
 
   constructor(public conf: SketchBuilderConfig, public meta?: Library) {}
 
-  set objectIdMapping(value: string) {
-    try {
-      this.idMapping = JSON.parse(value) as ObjectIdMapping;
-    } catch {
-      throw new Error('Could not parse objectIdMapping.json file.');
-    }
-  }
-
-  get objectIdMapping(): string {
-    return JSON.stringify(this.idMapping);
-  }
-
   async generateSketchFile(): Promise<number> {
     this.sortSymbols();
-    const drawer = new Drawer(this.idMapping);
+    const drawer = new Drawer();
     const sketch = new Sketch(
       this.conf.previewImage || 'assets/preview.png',
       this.conf.outFile,
@@ -63,6 +51,7 @@ export class ElementFetcher {
             pages.push(drawer.drawPage(result));
             break;
           case 'library':
+            drawer.idMapping = this.idMapping;
             symbolsMaster = drawer.drawSymbols(this
               .result[0] as TraversedLibrary);
             break;
@@ -85,7 +74,7 @@ export class ElementFetcher {
         drawer.idMapping.version = this.conf.library.version;
       }
       drawer.idMapping.libraryId = documentObjectId;
-      this.objectIdMapping = JSON.stringify(drawer.idMapping);
+      this.idMapping = drawer.idMapping;
     }
 
     if (process.env.SKETCH === 'open-close') {
