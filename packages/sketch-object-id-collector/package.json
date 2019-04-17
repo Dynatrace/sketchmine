@@ -1,0 +1,55 @@
+{
+  "name": "@sketchmine/sketch-object-id-collector",
+  "version": "3.0.0-alpha.0",
+  "description": "> TODO: description",
+  "author": "Lara Aigmueller <lara.aigmueller@dynatrace.com>",
+  "homepage": "https://github.com/dynatrace/sketchmine/tree/master/packages/sketch-object-id-collector#readme",
+  "license": "MIT",
+  "main": "lib/index.cjs.js",
+  "typings": "lib/@types/index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dynatrace/sketchmine/tree/master/packages/sketch-object-id-collector"
+  },
+  "scripts": {
+    "clean": " rm -rf lib coverage",
+    "build": "yarn clean && rollup -c",
+    "dev": "yarn build -w",
+    "lint": "tslint -p tsconfig.json",
+    "test": "echo \"No tests specified for sketch-object-id-collector yet! 😢\""
+  },
+  "bugs": {
+    "url": "https://github.com/Dynatrace/sketchmine/issues"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.0",
+    "@types/node": "^10.6.0",
+    "jest": "^23.6.0",
+    "rollup": "^0.67.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-typescript2": "^0.18.0",
+    "ts-jest": "^23.10.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0"
+  },
+  "bin": {
+    "skm-object-id-collector": "./lib/bin.js"
+  },
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "unzipper": "^0.9.11"
+  }
+}
