@@ -14,10 +14,10 @@ import {
 import { Logger } from '@sketchmine/node-helpers';
 import { ElementDrawer } from './element-drawer';
 import chalk from 'chalk';
-import { ObjectIdMapping } from './interfaces';
-import { getObjectId, setObjectId } from './helpers';
+import { ObjectIdService } from './object-id-service';
 
 const log = new Logger();
+const objectIdService = new ObjectIdService();
 const SYMBOL_ARTBOARD_MARGIN: number = 40;
 const MAX_SYMBOLS_VERTICAL_ALIGNED: number = 20;
 
@@ -85,7 +85,6 @@ export class Drawer {
 
   // Map of Symbols that are drawn with name and id
   drawnSymbols = new Map<string, string>();
-  idMapping: ObjectIdMapping;
 
   drawSymbols(library: TraversedLibrary): Page {
     const symbolsPage = sortSymbols(library.symbols as TraversedSymbol[]);
@@ -101,24 +100,19 @@ export class Drawer {
       symbolMaster.name = symbol.name;
 
       // Update symbol's objectId according to given id-mapping file
-      if (!!this.idMapping) {
-        const storedObjectId = getObjectId(symbolMaster.name, this.idMapping);
+      if (!!objectIdService.collection) {
+        const storedObjectId = objectIdService.getObjectId(symbolMaster.name);
         if (!!storedObjectId) {
           // tslint:disable-next-line max-line-length
           log.debug(chalk`Symbol {greenBright ${symbolMaster.name}} already exists, objectID {greenBright ${storedObjectId}} is reused.`);
           symbolMaster.objectID = storedObjectId;
-          // update change identifier of symbolMaster and in idMapping
-          const changeIdentifier = this.idMapping.symbols[symbolMaster.name].changeIdentifier;
-          this.idMapping.symbols[symbolMaster.name].changeIdentifier = changeIdentifier + 1;
-          symbolMaster.changeIdentifier = changeIdentifier + 1;
-        } else {
-          // tslint:disable-next-line max-line-length
-          log.debug(chalk`Symbol {greenBright ${symbolMaster.name}} is new, objectID {greenBright ${symbolMaster.objectID}} is generated.`);
-          this.idMapping = setObjectId(symbolMaster.name, symbolMaster.objectID, this.idMapping);
+          // Update change identifier of symbolMaster
+          symbolMaster.changeIdentifier = objectIdService.collection.symbols[symbolMaster.name].changeIdentifier + 1;
         }
       }
 
       if (symbol.symbol) {
+        objectIdService.currentSymbolMaster = symbolMaster.name;
         symbolMaster.layers = this.drawElements(symbol.symbol);
       }
 
@@ -148,7 +142,8 @@ export class Drawer {
   }
 
   private drawElements(element: ITraversedDomElement) {
-    const node = new ElementDrawer(element, this.drawnSymbols);
-    return [...node.layers];
+    const elementDrawer = new ElementDrawer(this.drawnSymbols);
+    elementDrawer.drawNode(element);
+    return [...elementDrawer.layers];
   }
 }

@@ -24,8 +24,10 @@ import chalk from 'chalk';
 import { SvgParser, SvgToSketch } from '@sketchmine/sketch-svg-parser';
 import { Logger } from '@sketchmine/node-helpers';
 import { ElementStyle } from './element-style';
+import { ObjectIdService } from './object-id-service';
 
 const log = new Logger();
+const objectIdService = new ObjectIdService();
 
 type LayerElements =
   SketchGroup |
@@ -39,10 +41,9 @@ type LayerElements =
 export class ElementDrawer {
   layers: LayerElements[] = [];
 
-  constructor(
-    element: ITraversedDomElement | ITraversedDomTextNode | ITraversedDomSvgNode,
-    public drawnSymbols: Map<string, string>,
-  ) {
+  constructor(public drawnSymbols: Map<string, string>) {}
+
+  drawNode(element: ITraversedDomElement | ITraversedDomTextNode | ITraversedDomSvgNode) {
     if (!element) { return; }
     switch (element.tagName) {
       case 'TEXT':
@@ -101,6 +102,12 @@ export class ElementDrawer {
 
     const text = new Text(paddedBCR, element.styles);
     text.text = element.text;
+
+    // Preserve the text node's objectId if it already exists from a previous library build
+    if (!!objectIdService.collection) {
+      text.objectID = this.getObjectId(text);
+    }
+
     this.layers.push(text.generateObject());
   }
 
@@ -137,7 +144,8 @@ export class ElementDrawer {
       element.children
       .reverse()
       .forEach((child: ITraversedDomElement | ITraversedDomTextNode | ITraversedDomSvgNode) => {
-        const childNode = new ElementDrawer(child, this.drawnSymbols);
+        const childNode = new ElementDrawer(this.drawnSymbols);
+        childNode.drawNode(child);
         if (childNode.layers.length) {
           group.layers.push(...childNode.layers);
         }
@@ -166,6 +174,21 @@ export class ElementDrawer {
       };
     }
     return bcr;
+  }
+
+  private getObjectId(node: Text): string {
+    if (
+      objectIdService.collection &&
+      objectIdService.currentSymbolMaster &&
+      objectIdService.collection.symbols[objectIdService.currentSymbolMaster]
+    ) {
+      const overrideId = objectIdService.getTextOverrideId(node);
+      log.debug(chalk`Layer already exists, objectID {greenBright ${overrideId}} is reused.`);
+      return overrideId;
+    }
+
+    log.debug(chalk`Layer is new, objectID {greenBright ${node.objectID}} is generated.`);
+    return node.objectID;
   }
 }
 

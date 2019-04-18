@@ -49,7 +49,7 @@
     "skm-object-id-collector": "./lib/bin.js"
   },
   "dependencies": {
-    "minimist": "^1.2.0",
-    "unzipper": "^0.9.11"
+    "@sketchmine/node-helpers": "^3.0.0-alpha.0",
+    "minimist": "^1.2.0"
   }
 }

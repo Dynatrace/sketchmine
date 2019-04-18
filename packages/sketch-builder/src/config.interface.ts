@@ -12,8 +12,7 @@ export interface SketchBuilderConfig {
 
 export interface Library {
   app: string;
-  objectIdMapping?: string;
-  version?: string;
+  prevBuild?: string;
 }
 
 export interface DefaultViewport {

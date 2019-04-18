@@ -1,3 +1,4 @@
+import { ObjectIdMapping } from './interfaces';
 import { main } from './main';
 
 export async function commandLineExecutor(): Promise<number> {
@@ -16,7 +17,11 @@ export async function commandLineExecutor(): Promise<number> {
     throw new Error('An input file to parse is required.');
   }
 
-  return await main(args.file);
+  const objectIdMapping: ObjectIdMapping = await main(args.file);
+  if (objectIdMapping) {
+    return 0;
+  }
+  return 1;
 }
 
 commandLineExecutor().catch((err) => {
@@ -26,5 +31,3 @@ commandLineExecutor().catch((err) => {
 .then((code: number) => {
   process.exit(code);
 });
-
-// node lib/bin --file=path/to/sketchfile.sketch

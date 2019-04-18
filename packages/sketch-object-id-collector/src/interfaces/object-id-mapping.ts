@@ -17,6 +17,4 @@ export interface ObjectOverrideProperties {
   objectId: string;
   className: string;
   bounding: IBounding;
-  distance?: number;
-  taken?: boolean;
 }
