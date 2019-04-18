@@ -1,7 +1,8 @@
 import { zipToBuffer as unzip } from '@sketchmine/node-helpers';
 import { ObjectIdCollector } from './object-id-collector';
+import { ObjectIdMapping } from './interfaces';
 
-export async function main(libraryFile: string): Promise<number> {
+export async function main(libraryFile: string): Promise<ObjectIdMapping> {
 
   // Unzip all the pages and the document.json file of the given Sketch file
   return unzip(libraryFile, /(document\.json|pages\/.*?\.json)/).then(async (result) => {
@@ -20,12 +21,6 @@ export async function main(libraryFile: string): Promise<number> {
     const objectIdCollector = new ObjectIdCollector(document, pages);
     objectIdCollector.makeCollection();
 
-    // console.log('final collection');
-    // console.log(objectIdCollector.collection);
-    // Object.values(objectIdCollector.collection.symbols).forEach((symbol) => {
-    //   console.log(symbol.overrides);
-    // });
-
-    return 0;
+    return objectIdCollector.collection;
   });
 }

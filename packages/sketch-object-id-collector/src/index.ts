@@ -1,1 +1,1 @@
-export * from './main';
+export { main as getObjectIdMapping } from './main';

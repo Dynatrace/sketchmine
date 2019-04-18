@@ -1,11 +1,14 @@
 import { Library } from '@sketchmine/code-analyzer';
-import { isFile, readFile, writeJSON } from '@sketchmine/node-helpers';
+import { isFile } from '@sketchmine/node-helpers';
+import { getObjectIdMapping } from '@sketchmine/sketch-object-id-collector';
 import chalk from 'chalk';
 import { exec } from 'child_process';
 import ora from 'ora';
 import { SketchBuilderConfig } from './config.interface';
 import { ElementFetcher } from './element-fetcher';
-import { ObjectIdMapping } from './interfaces';
+import { ObjectIdService } from './object-id-service';
+
+const objectIdService = new ObjectIdService();
 
 /**
  * @description the main entry point of this package
@@ -30,22 +33,16 @@ export async function main(config: SketchBuilderConfig, meta?: Library | undefin
   if (!process.env.DEBUG) {
     spinner = ora(chalk`Start scraping the provided site {grey ${config.url}} ⛏\n`).start();
   }
+
   const elementFetcher = new ElementFetcher(config, meta);
 
-  // Read objectIdMapping file if it exists and pass it to the element fetcher
-  if (config.library && config.library.objectIdMapping) {
-    if (isFile(config.library.objectIdMapping)) {
-      const objectIdMapping = await readFile(config.library.objectIdMapping);
-      if (objectIdMapping.length) {
-        try {
-          elementFetcher.idMapping = JSON.parse(objectIdMapping) as ObjectIdMapping;
-        } catch {
-          throw new Error('Could not parse objectIdMapping.json file.');
-        }
-      }
-    } else {
-      elementFetcher.idMapping = {} as ObjectIdMapping;
-    }
+  /**
+   * If a Sketch library file is built, check if there is a previous version
+   * (i.e. a file that has the same path as the defined outFile).
+   * If yes, collect all object IDs, that should be preserved on build of a new library file.
+   */
+  if (config.library && config.library.prevBuild && isFile(config.library.prevBuild)) {
+    objectIdService.collection = await getObjectIdMapping(config.library.prevBuild);
   }
 
   /**
@@ -62,11 +59,6 @@ export async function main(config: SketchBuilderConfig, meta?: Library | undefin
     spinner.text = 'Start writing your Sketch file 💎\n';
   }
   const exitCode = await elementFetcher.generateSketchFile();
-
-  // Write (updated) objectIdMapping file.
-  if (elementFetcher.idMapping) {
-    await writeJSON(config.library.objectIdMapping, elementFetcher.idMapping);
-  }
 
   if (!process.env.DEBUG) {
     spinner.stop();

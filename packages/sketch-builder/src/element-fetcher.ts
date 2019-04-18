@@ -9,11 +9,11 @@ import puppeteer from 'puppeteer';
 import { sketchGeneratorApi } from './builder-api';
 import { SketchBuilderConfig } from './config.interface';
 import { Drawer } from './drawer';
-import { getLibraryId } from './helpers/object-id-handler';
-import { ObjectIdMapping } from './interfaces';
+import { ObjectIdService } from './object-id-service';
 
 declare const window: any;
 const log = new Logger();
+const objectIdService = new ObjectIdService();
 
 /**
  * For debugging reasons the result of the dom Traverser can be stored in a file,
@@ -24,7 +24,6 @@ const LOCAL_RESULT_PATH = resolve('tests/fixtures/library.json');
 export class ElementFetcher {
   // private _assetHsandler: AssetHandler = new AssetHandler();
   result: (TraversedPage | TraversedLibrary)[] = [];
-  public idMapping: ObjectIdMapping;
 
   constructor(public conf: SketchBuilderConfig, public meta?: Library) {}
 
@@ -36,9 +35,9 @@ export class ElementFetcher {
       this.conf.outFile,
     );
 
-    // set library ID when library information is given in the config file
-    if (this.conf.library !== undefined) {
-      sketch.libraryId = getLibraryId(this.idMapping);
+    // Set library ID for the newly created library file
+    if (!!this.conf.library) {
+      sketch.libraryId = objectIdService.getLibraryId();
     }
 
     const pages = [];
@@ -51,7 +50,6 @@ export class ElementFetcher {
             pages.push(drawer.drawPage(result));
             break;
           case 'library':
-            drawer.idMapping = this.idMapping;
             symbolsMaster = drawer.drawSymbols(this
               .result[0] as TraversedLibrary);
             break;
@@ -64,18 +62,8 @@ export class ElementFetcher {
     //   sketch.prepareFolders();
     //   await this.downloadAssets();
     // }
-
-    const documentObjectId = await sketch.write([symbolsMaster, ...pages]);
+    await sketch.write([symbolsMaster, ...pages]);
     sketch.cleanup();
-
-    // Get objectIdMapping file from drawer after new elements have been drawn.
-    if (drawer.idMapping) {
-      if (this.conf.library && this.conf.library.version) {
-        drawer.idMapping.version = this.conf.library.version;
-      }
-      drawer.idMapping.libraryId = documentObjectId;
-      this.idMapping = drawer.idMapping;
-    }
 
     if (process.env.SKETCH === 'open-close') {
       exec(`open ${this.conf.outFile}`);
