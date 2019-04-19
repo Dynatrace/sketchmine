@@ -27,7 +27,13 @@ export class Sketch {
    * @returns – The document's object ID of the newly created Sketch file.
    */
   async write(pages: Page[]): Promise<string> {
-    const doc = this.generateDocument(pages);
+    const doc = new Document(pages);
+    if (!!this.libraryId) {
+      log.debug(chalk`Library ID {greenBright ${this.libraryId}} already exists and is reused.`);
+      doc.objectID = this.libraryId;
+    } else {
+      log.debug('Library is new, ID is generated.');
+    }
     const meta = new Meta(pages);
 
     await this.generateFolderStructure(pages, doc, meta);
@@ -52,21 +58,6 @@ export class Sketch {
     createDir(join(Sketch.TMP_PATH, 'pages'));
     createDir(join(Sketch.TMP_PATH, 'previews'));
     createDir(join(Sketch.TMP_PATH, 'images'));
-  }
-
-  /**
-   * Generates a new document and sets the library ID when already defined.
-   * @param pages – Sketch pages.
-   * @returns The generated document.
-   */
-  private generateDocument(pages: Page[]): Document {
-    log.debug(chalk`\n\n\t{yellow ——— GENERATING DOCUMENT ———}\n`);
-    if (!!this.libraryId) {
-      log.debug(chalk`Library ID {greenBright ${this.libraryId}} already exists and is reused.`);
-      return new Document(pages, this.libraryId);
-    }
-    log.debug('Library is new, ID is generated.');
-    return new Document(pages);
   }
 
   /**

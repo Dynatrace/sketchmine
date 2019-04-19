@@ -190,14 +190,13 @@ pipeline {
 
           docker run --rm \
             -e DOCKER=true \
-            -e VERSION=${VERSION} \
             --cap-add=SYS_ADMIN \
             --name sketch_builder \
             --net ${APP_NETWORK} \
             -v ${APP_VOL_NAME}:/app-shell \
             -v $(pwd)/_library:/generated \
             sketchmine/sketch-builder \
-            /bin/sh -c 'LIBRARY_VERSION="${VERSION}" node ./lib/bin --config="config.json"'
+            /bin/sh -c 'node ./lib/bin --config="config.json"'
         '''
       }
     }

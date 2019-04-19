@@ -147,14 +147,13 @@ h2 "Generate the Sketch file 💎"
 docker run -it --rm \
   -e DOCKER=true \
   -e DEBUG=true \
-  -e VERSION="$git_tag" \
   --cap-add=SYS_ADMIN \
   --name sketch_builder \
   --net ${APP_NETWORK} \
   -v ${APP_VOL_NAME}:/app-shell \
   -v "$(pwd)"/_library:/generated \
   sketchmine/sketch-builder \
-  /bin/sh -c 'LIBRARY_VERSION="${VERSION}" node ./lib/bin --config="config.json"'
+  /bin/sh -c 'node ./lib/bin --config="config.json"'
 
 h2 "Clean up 🧹"
 

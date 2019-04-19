@@ -5,15 +5,14 @@ import { Page } from './page';
 export class Document {
   private static _instance: Document;
   private _pages = [];
-  objectID: string;
+  objectID = UUID.generate();
 
-  constructor(pages: Page[], id?: string) {
+  constructor(pages: Page[]) {
     if (Document._instance) {
       return Document._instance;
     }
     Document._instance = this;
     this._pages = [...pages];
-    this.objectID = id ? id : UUID.generate();
   }
 
   private addPages(): SketchDocumentPage[] {
