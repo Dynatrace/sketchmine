@@ -28,12 +28,6 @@ export async function main(config: SketchBuilderConfig, meta?: Library | undefin
     exec(`osascript -e 'quit app "Sketch"'`);
   }
 
-  let spinner;
-
-  if (!process.env.DEBUG) {
-    spinner = ora(chalk`Start scraping the provided site {grey ${config.url}} ⛏\n`).start();
-  }
-
   const elementFetcher = new ElementFetcher(config, meta);
 
   /**
@@ -43,6 +37,12 @@ export async function main(config: SketchBuilderConfig, meta?: Library | undefin
    */
   if (config.library && config.library.prevBuild && isFile(config.library.prevBuild)) {
     objectIdService.collection = await getObjectIdMapping(config.library.prevBuild);
+  }
+
+  let spinner;
+
+  if (!process.env.DEBUG) {
+    spinner = ora(chalk`Start scraping the provided site {grey ${config.url}} ⛏\n`).start();
   }
 
   /**

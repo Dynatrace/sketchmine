@@ -1,5 +1,9 @@
-import { ObjectIdMapping } from './interfaces';
-import { IBounding, Text } from '@sketchmine/sketch-file-format';
+import { ObjectIdMapping, TextObjectOverrideProperty } from '@sketchmine/sketch-object-id-collector';
+import { Text } from '@sketchmine/sketch-file-format';
+
+interface UsedObjectOverrideProperty extends TextObjectOverrideProperty {
+  _used: boolean;
+}
 
 /**
  * The object Id service holds an objectIdMapping object during the library build.
@@ -7,7 +11,7 @@ import { IBounding, Text } from '@sketchmine/sketch-file-format';
  * IDs when they have already been generated on a previous library build.
  */
 export class ObjectIdService {
-  private static _instance: ObjectIdService;
+  private static instance: ObjectIdService;
   collection: ObjectIdMapping;
   /**
    * When drawing layers of a symbolMaster its name is needed as a key
@@ -17,8 +21,8 @@ export class ObjectIdService {
   currentSymbolMaster: string;
 
   constructor() {
-    if (ObjectIdService._instance) { return ObjectIdService._instance; }
-    ObjectIdService._instance = this;
+    if (ObjectIdService.instance) { return ObjectIdService.instance; }
+    ObjectIdService.instance = this;
   }
 
   /**
@@ -27,12 +31,9 @@ export class ObjectIdService {
    * @returns The symbol's objectID or undefined if there is none.
    */
   getObjectId(symbolKey: string): string | undefined {
-    let objectId;
     if (this.collection && this.collection.symbols && this.collection.symbols[symbolKey]) {
-      objectId = this.collection.symbols[symbolKey].objectId;
+      return this.collection.symbols[symbolKey].objectId;
     }
-    return objectId;
-
     // TODO: what about if name parts are sorted differently? (e.g. button/primary/main instead of button/main/primary)
   }
 
@@ -44,35 +45,40 @@ export class ObjectIdService {
     if (this.collection && this.collection.libraryId) {
       return this.collection.libraryId;
     }
-
-    return;
   }
 
   getTextOverrideId(node: Text): string | undefined {
-    const overrideProperties = this.collection.symbols[this.currentSymbolMaster].overrides || [];
-    if (overrideProperties.length) {
-      const filteredProperties = overrideProperties
-        .filter(property => property.className === node.className && !property.used);
-      filteredProperties.forEach((property) => {
-        property.distance = getBoundingDistance(property.bounding, node.bounding);
-      });
-      filteredProperties.sort((a, b) => a.distance - b.distance);
-      filteredProperties[0].used = true;
-      if (filteredProperties.length) {
-        return filteredProperties[0].objectId;
+    let objectId = node.objectID;
+    const overrideProperties = this.collection.symbols[this.currentSymbolMaster].overrides;
+
+    if (!overrideProperties.length) {
+      return objectId;
+    }
+
+    const filteredProperties = overrideProperties
+      .filter((property: UsedObjectOverrideProperty) => !property._used);
+
+    // Compare text content to match objectId
+    let textMatch = false;
+    for (let i = 0; i < filteredProperties.length; i = i + 1) {
+      const property = filteredProperties[i] as UsedObjectOverrideProperty;
+      if (property.text && property.text === node.text) {
+        objectId = property.objectId;
+        property._used = true;
+        textMatch = true;
+        break;
       }
     }
 
-    // TODO: do not take bounding box only for distance; there are a lot of objects with x/y both 0!
-    // absolute coordinates needed
+    if (textMatch) {
+      return objectId;
+    }
 
-    return node.objectID;
+    (filteredProperties[0] as UsedObjectOverrideProperty)._used = true;
+    return filteredProperties[0].objectId;
+
+    // TODO: for a better ID match calculate absolute position
+    // of the element in the Sketch file and compare the distance values.
+
   }
-}
-
-function getBoundingDistance(boundingA: IBounding, boundingB: IBounding): number {
-  return Math.sqrt(
-    Math.pow(boundingA.x - boundingB.x, 2) +
-    Math.pow(boundingA.y - boundingB.y, 2),
-  );
 }

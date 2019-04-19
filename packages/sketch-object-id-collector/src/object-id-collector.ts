@@ -1,23 +1,26 @@
-import { SketchBase, SketchObjectTypes, SketchSymbolMaster, IBounding } from '@sketchmine/sketch-file-format';
+import {
+  SketchDocument,
+  SketchPage,
+  IBounding,
+  SketchBase,
+  SketchObjectTypes,
+  SketchSymbolMaster,
+  SketchText,
+} from '@sketchmine/sketch-file-format';
 import { ObjectIdMapping } from './interfaces';
 
 export class ObjectIdCollector {
   collection: ObjectIdMapping;
-  private _document;
-  private _pages = [];
 
-  constructor(documentFile: string, pages: string[]) {
-    this._document = JSON.parse(documentFile);
-    pages.forEach(page => this._pages.push(JSON.parse(page)));
-  }
-
-  makeCollection(): void {
+  constructor(document: SketchDocument) {
     this.collection = {
-      version: '0.0.0', // TODO: get Angular components version here
-      libraryId: this._document.do_objectID,
+      libraryId: document.do_objectID,
       symbols: {},
     };
-    this._pages.forEach(page => this.collectIDs(page));
+  }
+
+  collect(pages: SketchPage[]): void {
+    pages.forEach(page => this.collectIDs(page));
   }
 
   private collectIDs(element: SketchBase, symbolMasterName?: string): void {
@@ -42,7 +45,7 @@ export class ObjectIdCollector {
       }
     }
 
-    // Collect overrides
+    // Collect text overrides
     if (element._class === SketchObjectTypes.Text && symbolKey) {
       if (this.collection.symbols[symbolKey]) {
         const textBounding: IBounding = {
@@ -54,7 +57,7 @@ export class ObjectIdCollector {
         this.collection.symbols[symbolKey].overrides.push({
           objectId: element.do_objectID,
           bounding: textBounding,
-          className: element._class,
+          text: (element as SketchText).attributedString.string,
         });
       }
     }

@@ -1,7 +1,5 @@
 import { IBounding } from '@sketchmine/sketch-file-format';
-
 export interface ObjectIdMapping {
-  version: string;
   symbols: { [key: string]: ObjectIdMappingSymbol };
   symbolAliases?: { [key: string]: string };
   libraryId?: string;
@@ -10,11 +8,14 @@ export interface ObjectIdMapping {
 export interface ObjectIdMappingSymbol {
   objectId: string;
   changeIdentifier: number;
-  overrides?: ObjectOverrideProperties[];
+  overrides: TextObjectOverrideProperty[];
 }
 
-export interface ObjectOverrideProperties {
+export interface ObjectOverrideProperty {
   objectId: string;
-  className: string;
   bounding: IBounding;
+}
+
+export interface TextObjectOverrideProperty extends ObjectOverrideProperty {
+  text: string;
 }
