@@ -27,7 +27,8 @@ describe('[sketch-builder] › draw sketch elements', () => {
     baseTraversedElement.styles.borderLeft = '1px solid rgb(196, 20, 37)';
     baseTraversedElement.styles.borderTop = '1px solid rgb(196, 20, 37)';
 
-    const el = new ElementDrawer(baseTraversedElement, new Map());
+    const el = new ElementDrawer(new Map());
+    el.drawNode(baseTraversedElement);
     expect(el.layers).toBeInstanceOf(Array);
     expect(el.layers).toHaveLength(1);
     const group = el.layers[0];
