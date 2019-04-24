@@ -1,11 +1,11 @@
 {
-  "url": "http://web_server/",
-  "rootElement": "ng-component > * ",
+  "url": "http://localhost:4200/",
+  "rootElement": "app-root > * ",
   "library": {
     "app": "/app-shell/"
   },
   "previewImage": "assets/preview.png",
-  "outFile": "/generated/library.sketch",
+  "outFile": "_library/library.sketch",
   "chrome": {
     "defaultViewport": {
       "width": 1200,

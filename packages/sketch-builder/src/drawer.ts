@@ -102,6 +102,11 @@ export class Drawer {
       }
 
       this.drawnSymbols.set(symbolMaster.name, symbolMaster.objectID);
+
+      page.userInfo = {
+        "com.animaapp.stc-sketch-plugin": { "com.animaapp.uses.anima": 1 }
+      };
+
       page.addLayer(symbolMaster.generateObject());
     }
     return page;

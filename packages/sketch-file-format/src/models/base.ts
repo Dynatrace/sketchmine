@@ -11,12 +11,26 @@ import {
 } from '../interfaces';
 
 export class Base {
+  /** Unique identifier that is RCF4 compliant */
   objectID = UUID.generate();
   layers = [];
   breakMaskChain = false;
   name: string;
   style: SketchStyle;
   className: SketchObjectTypes;
+
+  /**
+   * The user information object is used to store plugin specific data. Every entry
+   * has to start with an app identifier as object key so the userInfo property
+   * consist out of objects where the key represents the developers identifier like
+   * ```json
+"userInfo": {
+  "com.developer-name.plugin-name": { ... }
+},
+```
+   */
+  userInfo: Object;
+
   private rotation = 0;
 
   constructor(public bounding: IBounding) {}
@@ -82,6 +96,7 @@ export class Base {
       resizingType: 0,
       rotation: this.rotation,
       shouldBreakMaskChain: this.breakMaskChain,
+      userInfo: this.userInfo,
       style: this.style ? this.style : undefined,
     };
   }

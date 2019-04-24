@@ -13,6 +13,8 @@ import {
   SketchText,
   SymbolInstance,
   Text,
+  ShapeGroup,
+  Rectangle,
 } from '@sketchmine/sketch-file-format';
 import {
   ITraversedDomElement,
@@ -123,6 +125,29 @@ export class ElementDrawer {
     }
 
     const group = new Group(size);
+
+    if (element.className === 'dt-button-label') {
+      group.userInfo = {
+        "com.animaapp.stc-sketch-plugin": {
+          kModelPropertiesKey: {
+            padding: {
+              bottom: 7,
+              model_class: "ADModelViewPadding",
+              left: 16,
+              model_version: 0.1,
+              modelID: "viewPadding_319cadbe-82e7-4798-9658-718d63635026",
+              top: 7,
+              right: 16
+            }
+          }
+        }
+      }
+      console.log(element.parentRect)
+      const background = new Rectangle(element.parentRect, 0);
+      background.name = 'Anima Background';
+      group.addLayer(background.generateObject());
+    }
+
     group.name = element.className || element.tagName.toLowerCase();
 
     if (hasStyling(element)) {
@@ -153,7 +178,7 @@ export class ElementDrawer {
       console.log(chalk`\t{magentaBright ${element.className}} | {yellowBright ${element.tagName}}`, bcr);
     }
 
-    /** root elemenet has no parentBCR */
+    /** root element has no parentBCR */
     if (parentBCR && Object.keys(parentBCR).length > 0) {
       const x = bcr.x - parentBCR.x;
       const y = bcr.y - parentBCR.y;

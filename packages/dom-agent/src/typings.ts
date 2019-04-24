@@ -36,6 +36,7 @@ export interface ITraversedDomElement extends ITraversedElement {
   matchingComponent: string;
   variant: string;
   children?: ITraversedElement[];
+  autoLayout: { autoWidth: boolean; };
 }
 export interface ITraversedDomTextNode extends ITraversedElement{
   text: string;

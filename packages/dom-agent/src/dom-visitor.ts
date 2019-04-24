@@ -9,7 +9,7 @@ import {
 
 /**
  * The property keys that are used to identify if the element
- * has default styling behaviours for the background.
+ * has default styling behaviors for the background.
  * uses the values from `new StyleDeclaration()`.
  */
 const DEFAULT_STYLING_VALUES = [
@@ -28,6 +28,24 @@ export interface StyleOptions {
   hasDefaultStyling: boolean;
 }
 
+function hasAutoWidth(element: Element) {
+  const initialWidth = element.getBoundingClientRect().width;
+  // create ghost element
+  const ghost = document.createElement('b');
+  ghost.style.display = 'inline-block';
+  ghost.style.height = '1px';
+  ghost.style.width = '1px';
+  ghost.style.padding = '0';
+  ghost.style.margin = '0';
+
+  element.appendChild(ghost);
+  const updatedWidth = element.getBoundingClientRect().width;
+  element.removeChild(ghost);
+
+	return updatedWidth > initialWidth;
+}
+
+
 /**
  * @description
  * The visitor visits a node and pulls the information out that is later needed
@@ -40,16 +58,19 @@ export class DomVisitor implements Visitor {
 
   visitElement(element: elementNode): ITraversedDomElement {
     const isRoot = element === this.hostElement;
-    const className = (typeof element.className === 'string') ? element.className.split(' ').join('\/') : '';
+    const className = this.getClassName(element).join('\/');
     const tagName = element.tagName.toUpperCase();
     const parent = element.parentElement;
-    const parentRect: DOMRect | null = (parent && !isRoot) ? this.getRect(parent as HTMLElement) : null;
+    const parentRect: DOMRect | null = (parent && !isRoot)
+      ? this.getRect(parent as HTMLElement)
+      : null;
     const options = this.getStyle(element);
     const matchingComponent = this.selectors.find(sel => element.webkitMatchesSelector(sel)) || null;
 
     if (matchingComponent && !isRoot) {
       this.hasNestedSymbols.push(matchingComponent);
     }
+
 
     const el = {
       tagName,
@@ -60,6 +81,9 @@ export class DomVisitor implements Visitor {
       matchingComponent,
       variant: matchingComponent ? element.getAttribute('symbol-variant') : null,
       isHidden: options.isHidden,
+      autoLayout: {
+        autoWidth: hasAutoWidth(element),
+      },
     } as ITraversedDomElement;
 
     switch (tagName) {
@@ -103,6 +127,13 @@ export class DomVisitor implements Visitor {
       isHidden: options.isHidden,
       text: text.textContent,
     };
+  }
+
+  /** Returns the classes of an HTMLElement as an array with strings */
+  getClassName(element: Element): string[] {
+    return (typeof element.className === 'string')
+      ? element.className.split(' ')
+      : [];
   }
 
   /**

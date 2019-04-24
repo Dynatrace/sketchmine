@@ -1,3 +1,4 @@
+// Sketch interfaces
 export * from './artboard.interface';
 export * from './base.interface';
 export * from './bitmap.interface';
@@ -23,3 +24,6 @@ export * from './symbol-instance.interface';
 export * from './symbol-master.interface';
 export * from './text-style.interface';
 export * from './text.interface';
+
+// Third party plugin interfaces
+export * from './plugins';

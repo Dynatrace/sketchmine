@@ -59,6 +59,7 @@ export interface SketchBase {
   resizingType: number;
   rotation: number;
   shouldBreakMaskChain: boolean;
+  userInfo?: { [key: string]: any; };
   style: SketchStyle;
 }
 
