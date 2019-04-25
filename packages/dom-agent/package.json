@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/dom-agent",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "Dom Agent that gets injected to get all the style information about a page",
   "author": "Lukas Holzer <lukas.holzer@dynatrace.com>",
   "homepage": "",
@@ -25,7 +25,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@sketchmine/node-helpers": "^3.0.0-alpha.0",
+    "@sketchmine/node-helpers": "^3.0.0-alpha.1",
     "@types/jest": "^23.3.0",
     "@types/puppeteer": "^1.6.0",
     "jest": "^23.6.0",
@@ -43,7 +43,7 @@
     "typescript": "^3.2.1"
   },
   "dependencies": {
-    "@sketchmine/helpers": "^3.0.0-alpha.0"
+    "@sketchmine/helpers": "^3.0.0-alpha.1"
   },
   "gitHead": "e68a441a334fa1134af0ac8e5bb9ac3c58021c75"
 }

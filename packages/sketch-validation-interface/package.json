@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/sketch-validation-interface",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "Interface for the sketch-validation plugin",
   "author": "Lukas Holzer <lukas.holzer@dynatrace.com>",
   "homepage": "https://github.com/dynatrace/sketchmine/tree/master/packages/sketch-validaton-interface#readme",
@@ -47,7 +47,7 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
-    "@sketchmine/sketch-validator": "^3.0.0-alpha.0",
+    "@sketchmine/sketch-validator": "^3.0.0-alpha.1",
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",

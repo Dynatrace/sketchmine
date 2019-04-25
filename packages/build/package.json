@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/build",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "private": true,
   "description": "Build scripts for the library",
   "keywords": [
@@ -29,7 +29,7 @@
     "url": "https://github.com/Dynatrace/sketchmine/issues"
   },
   "dependencies": {
-    "@sketchmine/node-helpers": "^3.0.0-alpha.0",
+    "@sketchmine/node-helpers": "^3.0.0-alpha.1",
     "aws-sdk": "^2.395.0",
     "mime-types": "^2.1.21",
     "minimist": "^1.2.0"
