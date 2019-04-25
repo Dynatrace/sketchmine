@@ -1,0 +1,371 @@
+{
+  "libraryId": "C5F0F2E7-6DDA-4421-B3E0-9DC085691B87",
+  "symbols": {
+    "alert\/light-bg\/error\/default": {
+      "objectId": "F053FE21-6E63-49D0-999C-45C203832471",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "524B287C-EF4A-4E6A-8B27-545BD656983C",
+          "bounding": {
+            "height": 24,
+            "width": 732,
+            "x": 16,
+            "y": 10
+          },
+          "text": "This is an error message!"
+        }
+      ]
+    },
+    "alert\/light-bg\/warning\/default": {
+      "objectId": "962799F0-2095-4D02-84F4-99107436BBB8",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "1472F4F3-C93B-405F-BB83-074F9F6172C3",
+          "bounding": {
+            "height": 24,
+            "width": 732,
+            "x": 16,
+            "y": 10
+          },
+          "text": "This is an error message!"
+        }
+      ]
+    },
+    "button\/light-bg\/cta\/nested\/default": {
+      "objectId": "0126FBB4-E964-4766-9FCB-5E20318CC5D8",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "AC082B42-33A6-45CD-8D7B-BA7A6BFA9777",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/cta\/nested\/disabled": {
+      "objectId": "D62E99D2-2097-4DA0-B3AF-B9D84D359EE4",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "0B874F39-ABDE-4D79-8B57-444713B80BD7",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/cta\/primary\/default": {
+      "objectId": "B6A0EE83-323C-4448-8D2C-874FADFAD5AE",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "4D735D4F-5C2E-4C61-A80D-7A9F71AB5EC7",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/cta\/primary\/disabled": {
+      "objectId": "C02A0F63-2C44-485D-BBD3-8FCF4A9D7296",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "96D5F55D-7BC1-4A4C-AEF4-E654B7046367",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/cta\/secondary\/default": {
+      "objectId": "C08312FE-E0B6-4018-BF59-EEF93FB003C5",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "3E57C3FA-4086-4E61-9EC1-92924D342A75",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/cta\/secondary\/disabled": {
+      "objectId": "4AB47E97-5C56-46CF-9D92-F3605DBA646C",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "3D057529-4BE0-49F2-AAE9-B511671FE2CE",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/main\/nested\/default": {
+      "objectId": "B4C10F34-CF8A-42EB-A7E9-2FB10A6FAF61",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "906D3038-51C1-460E-BABA-1437F809F92C",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/main\/nested\/disabled": {
+      "objectId": "6EC4F1B6-3DEE-4E5D-BC68-ED45BAE47C49",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "DD7CC05B-EC26-4A7D-8FD1-8D3C61A95A69",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/main\/primary\/default": {
+      "objectId": "7C9F3032-4354-4A07-BA2E-D14F425C0768",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "645E1ACB-2C1F-4AB8-8127-D78F1D25E868",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/main\/primary\/disabled": {
+      "objectId": "D1A63855-65AB-4018-9159-AE116F0F9740",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "6A54987F-1693-45AD-A09D-6A5D05237B37",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/main\/secondary\/default": {
+      "objectId": "66C1D03E-475F-49AF-944C-4EA72707DC50",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "9EE23D22-103A-4964-96D3-0D4CEE526C6D",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/main\/secondary\/disabled": {
+      "objectId": "37C73BFF-F835-4522-8794-E924E4C95F13",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "931C6CBB-0508-4DD9-BCF7-40F88CD82AC5",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/warning\/nested\/default": {
+      "objectId": "1DB866CF-4EC6-4DF4-A739-F8C99CB07204",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "ACA308E1-0040-434B-B873-6B7044130683",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/warning\/nested\/disabled": {
+      "objectId": "359E143B-5CA6-4813-A9EF-7FEF021D5B56",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "F89763F3-F6C0-49C5-A987-94D0811EF5E6",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/warning\/primary\/default": {
+      "objectId": "E247E7B7-742F-4B64-B0EB-8A30DCC5DBE3",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "CE2994B3-4248-48AC-84AE-861998D01EDC",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/warning\/primary\/disabled": {
+      "objectId": "2C36D9D6-86BC-47B5-9228-09EC5E081B62",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "BE6DD983-7315-44DC-A22A-7D6907EECC8A",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/warning\/secondary\/default": {
+      "objectId": "BDE7E05B-818D-437F-AD3E-BAE945E3A7C9",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "8C81BC0D-2CD0-496D-B3AC-1A01329F4F2B",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "button\/light-bg\/warning\/secondary\/disabled": {
+      "objectId": "084C4D7A-B65A-47EB-B834-483DDE91F363",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "363D72D3-77E2-4004-B833-31535C021980",
+          "bounding": {
+            "height": 34,
+            "width": 90,
+            "x": -0.5,
+            "y": 0
+          },
+          "text": "Simple button"
+        }
+      ]
+    },
+    "card\/light-bg\/default": {
+      "objectId": "AD9CCD38-CFB4-45D8-A072-3590C88A16C1",
+      "changeIdentifier": 1,
+      "overrides": [
+        {
+          "objectId": "51F94225-A40B-4834-9B49-67C4220FEE02",
+          "bounding": {
+            "height": 22,
+            "width": 776,
+            "x": 0,
+            "y": 0
+          },
+          "text": "The card is not an interactive element, therefore, there are no hover, active and disabled card."
+        },
+        {
+          "objectId": "293E45BC-5FAF-43E2-B6EF-E99722BEABA2",
+          "bounding": {
+            "height": 17,
+            "width": 79,
+            "x": 0,
+            "y": 0
+          },
+          "text": "Some Action"
+        },
+        {
+          "objectId": "A75CA544-C55D-4045-B60B-5B0D39078064",
+          "bounding": {
+            "height": 28,
+            "width": 665,
+            "x": 0,
+            "y": 0
+          },
+          "text": "Some subtitle"
+        },
+        {
+          "objectId": "1BD78B91-78DF-4BDE-931C-61A9E329B1F6",
+          "bounding": {
+            "height": 32,
+            "width": 665,
+            "x": 0,
+            "y": 0
+          },
+          "text": "Top 3 JavaScript errors"
+        }
+      ]
+    }
+  }
+}

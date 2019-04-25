@@ -26,7 +26,7 @@
     "build": "yarn clean && rollup -c",
     "dev": "yarn build -w",
     "lint": "tslint -p tsconfig.json",
-    "test": "echo \"No tests specified for sketch-object-id-collector yet! 😢\""
+    "test": "jest --detectOpenHandles --verbose --forceExit"
   },
   "bugs": {
     "url": "https://github.com/Dynatrace/sketchmine/issues"
