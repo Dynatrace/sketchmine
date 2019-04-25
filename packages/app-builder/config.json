@@ -25,7 +25,7 @@
       "link": "LinkSimpleExampleComponent",
       "loading-distractor": "DefaultLoadingDistractorExampleComponent",
       "micro-chart": "MicroChartDefaultExampleComponent",
-      "pagination": "DefaultPaginationExampleComponent",
+      "pagination": "ManyPaginationExampleComponent",
       "progress-bar": "DefaultProgressBarExampleComponent",
       "progress-circle": "DefaultProgressCircleExampleComponent",
       "radio": "DefaultRadioExample",
@@ -41,7 +41,7 @@
     {
       "type": "dependencies",
       "name": "@dynatrace/angular-components",
-      "version": "2.2.0"
+      "version": "2.6.0"
     },
     {
       "type": "dependencies",

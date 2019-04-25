@@ -7,6 +7,7 @@ import {
   OnDestroy,
   ComponentRef,
   SimpleChange,
+  ViewEncapsulation,
 } from '@angular/core';
 import { CdkPortalOutlet, ComponentPortal } from '@angular/cdk/portal';
 import { ViewData } from '@angular/core/src/view'; // not exported from core (only for POC)
@@ -30,11 +31,25 @@ export interface VariantChange {
   value: string;
 }
 
+const BLACKLIST = [
+  'loading-distractor',
+  'expandable-section',
+  'button-group',
+  'context-dialog',
+  'checkbox',
+  'progress-circle',
+  'switch',
+  'breadcrumbs',
+  'radio',
+];
+
 declare var window: any;
 
 @Component({
   selector: 'app-root',
   template: '<div cdkPortalOutlet></div>',
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -52,7 +67,10 @@ export class AppComponent implements OnInit, OnDestroy {
     const availableExamples = this.registry.getExamplesList();
     this.metaSubscription = this.metaService.getMeta()
       .pipe(
-        map((comps: MetaComponent[]) => comps.filter(comp => availableExamples.includes(comp.component))),
+        map((comps: MetaComponent[]) =>
+          comps.filter(comp =>
+            availableExamples.includes(comp.component) &&
+            !BLACKLIST.includes(comp.component))),
       )
       .subscribe(async (components: MetaComponent[]) => {
         await asyncForEach(components, async (componentMeta: MetaComponent) => {
