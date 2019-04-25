@@ -15,12 +15,15 @@ RUN mkdir -p /lib && \
     apk add --no-cache \
       chromium@edge \
       nss@edge \
-      harfbuzz@edge
+      freetype@edge \
+      harfbuzz@edge \
+      ttf-freefont@edge
 
+# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
-# Puppeteer v1.4.0 works with Chromium 68.
-RUN yarn add puppeteer@1.9.0
+# Puppeteer v1.11.0 works with Chromium 72.
+RUN yarn add puppeteer@1.11.0
 
 # Add user so we don't need --no-sandbox.
 # RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
