@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/node-helpers",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "A collection of node.js helpers",
   "author": "Lukas Holzer <lukas.holzer@dynatrace.com>",
   "homepage": "https://github.com/dynatrace/sketchmine#readme",
@@ -25,7 +25,7 @@
     "test": "jest --detectOpenHandles --verbose --forceExit"
   },
   "dependencies": {
-    "@sketchmine/helpers": "^3.0.0-alpha.0",
+    "@sketchmine/helpers": "^3.0.0-alpha.1",
     "chalk": "^2.4.0",
     "unzipper": "^0.8.0"
   },

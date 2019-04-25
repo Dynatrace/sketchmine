@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/sketch-builder",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "Injects the dom-agent to fetch the properties of a webpage and generates a .sketch file out of the webpage.",
   "keywords": [
     "sketch",
@@ -56,14 +56,14 @@
     "typescript": "^3.2.1"
   },
   "dependencies": {
-    "@sketchmine/code-analyzer": "^3.0.0-alpha.0",
-    "@sketchmine/dom-agent": "^3.0.0-alpha.0",
-    "@sketchmine/helpers": "^3.0.0-alpha.0",
-    "@sketchmine/node-helpers": "^3.0.0-alpha.0",
-    "@sketchmine/sketch-file-builder": "^3.0.0-alpha.0",
-    "@sketchmine/sketch-file-format": "^3.0.0-alpha.0",
-    "@sketchmine/sketch-object-id-collector": "^3.0.0-alpha.0",
-    "@sketchmine/sketch-svg-parser": "^3.0.0-alpha.0",
+    "@sketchmine/code-analyzer": "^3.0.0-alpha.1",
+    "@sketchmine/dom-agent": "^3.0.0-alpha.1",
+    "@sketchmine/helpers": "^3.0.0-alpha.1",
+    "@sketchmine/node-helpers": "^3.0.0-alpha.1",
+    "@sketchmine/sketch-file-builder": "^3.0.0-alpha.1",
+    "@sketchmine/sketch-file-format": "^3.0.0-alpha.1",
+    "@sketchmine/sketch-object-id-collector": "^3.0.0-alpha.1",
+    "@sketchmine/sketch-svg-parser": "^3.0.0-alpha.1",
     "axios": "^0.18.0",
     "chalk": "^2.4.0",
     "inquirer": "^6.2.1",

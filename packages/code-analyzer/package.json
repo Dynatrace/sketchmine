@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/code-analyzer",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "Pulls out the information from a source code and provides an abstract representation in JSON format about the code.",
   "keywords": [
     "angular",
@@ -50,8 +50,8 @@
     "tslint-config-airbnb": "^5.11.0"
   },
   "dependencies": {
-    "@sketchmine/helpers": "^3.0.0-alpha.0",
-    "@sketchmine/node-helpers": "^3.0.0-alpha.0",
+    "@sketchmine/helpers": "^3.0.0-alpha.1",
+    "@sketchmine/node-helpers": "^3.0.0-alpha.1",
     "@types/node": "^10.12.21",
     "chalk": "^2.4.0",
     "lodash": "^4.17.0",

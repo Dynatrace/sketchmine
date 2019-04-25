@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/sketch-color-replacer",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "Replaces a set of colors with a given set of colors",
   "keywords": [
     "sketch",
@@ -50,9 +50,9 @@
     "typescript": "^3.2.1"
   },
   "dependencies": {
-    "@sketchmine/node-helpers": "^3.0.0-alpha.0",
-    "@sketchmine/sketch-file-builder": "^3.0.0-alpha.0",
-    "@sketchmine/sketch-file-format": "^3.0.0-alpha.0",
+    "@sketchmine/node-helpers": "^3.0.0-alpha.1",
+    "@sketchmine/sketch-file-builder": "^3.0.0-alpha.1",
+    "@sketchmine/sketch-file-format": "^3.0.0-alpha.1",
     "minimist": "^1.2.0"
   },
   "bin": {

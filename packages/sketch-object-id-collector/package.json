@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/sketch-object-id-collector",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "> TODO: description",
   "author": "Lara Aigmueller <lara.aigmueller@dynatrace.com>",
   "homepage": "https://github.com/dynatrace/sketchmine/tree/master/packages/sketch-object-id-collector#readme",
@@ -49,7 +49,7 @@
     "skm-object-id-collector": "./lib/bin.js"
   },
   "dependencies": {
-    "@sketchmine/node-helpers": "^3.0.0-alpha.0",
+    "@sketchmine/node-helpers": "^3.0.0-alpha.1",
     "minimist": "^1.2.0"
   }
 }
