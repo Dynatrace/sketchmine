@@ -58,6 +58,9 @@ export class ObjectIdService {
     const filteredProperties = overrideProperties
       .filter((property: UsedObjectOverrideProperty) => !property._used);
 
+    // if we have no properties we kan return undefined so we have no text override
+    if (!filteredProperties.length) { return; }
+
     // Compare text content to match objectId
     let textMatch = false;
     for (let i = 0; i < filteredProperties.length; i = i + 1) {
