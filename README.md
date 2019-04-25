@@ -3,19 +3,28 @@
 [![Build Status](https://dev.azure.com/sketchmine/sketchmine/_apis/build/status/Dynatrace.sketchmine?branchName=master)](https://dev.azure.com/sketchmine/sketchmine/_build/latest?definitionId=1) [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/) [![jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 [![made with sketchmine](https://dt-cdn.net/images/made-with-sketchmine-2a0b31-1-3d32502b89.svg)](https://github.com/Dynatrace/sketchmine/)
 
-* [What is Sketchmine?](#what-is-sketchmine)
-* [The parts](#the-parts)
-* [Dependency graph](#dependency-graph)
-* [Getting started 🚀](#installation)
-* [Testing](#testing)
-* [Maintainers](#maintainers)
-* [License](#license)
-* [How to Contribute](./CONTRIBUTING.md)
-* [Changelog](./CHANGELOG.md)
+- [What is Sketchmine?](#what-is-sketchmine)
+- [The parts](#the-parts)
+- [Getting started](#getting-started)
+  - [Architecture](#architecture)
+  - [Dependency graph](#dependency-graph)
+  - [Installation](#installation)
+  - [How to get up and running](#how-to-get-up-and-running)
+  - [Docker: the Jenkins way 🐳](#docker-the-jenkins-way-%F0%9F%90%B3)
+    - [Run with docker-compose](#run-with-docker-compose)
+    - [Run without Docker](#run-without-docker)
+    - [Docker registry](#docker-registry)
+    - [Clean up your docker images and containers](#clean-up-your-docker-images-and-containers)
+  - [Available commands](#available-commands)
+  - [Debugging](#debugging)
+- [Testing](#testing)
+- [Maintainers](#maintainers)
+- [License](#license)
+
 
 ## What is Sketchmine?
 
-Sketchmine is a toolset for creating, validating, and maintaining Sketch and Sketch symbol files. Most parts are used to generate [Sketch symbol libraries](https://sketchapp.com/docs/libraries/library-symbols) out of Angular components. See [Stefan Baumgartner and Katrin Freihofner's talk at AngularConnect](https://www.youtube.com/watch?v=3_XvaSD_0xo) to learn more about our workflow and what you can do with Sketchmine.
+Sketchmine is a toolkit for creating, validating, and maintaining Sketch and Sketch symbol files. Most parts are used to generate [Sketch symbol libraries](https://sketchapp.com/docs/libraries/library-symbols) out of Angular components. See [Stefan Baumgartner and Katrin Freihofner's talk at AngularConnect](https://www.youtube.com/watch?v=3_XvaSD_0xo) to learn more about our workflow and what you can do with Sketchmine.
 
 [![Youtube](https://img.youtube.com/vi/3_XvaSD_0xo/0.jpg)](https://www.youtube.com/watch?v=3_XvaSD_0xo)
 
@@ -23,16 +32,20 @@ But there's more. Sketchmine can also be used to validate Sketch files against a
 
 ## The parts
 
-* [**app-builder**](./packages/app-builder/README.md) generates an angular app with the information of the code-analyzer.
-* [**code-analyzer**](./packages/code-analyzer/README.md) creates a JSON representation of the provided code. Supports [Angular](https://angular.io/).
-* [**dom-agent**](./packages/dom-agent/README.md) a DOM traverser that is injected by the browser to scrape the information out of the page.
-* [**helpers**](./packages/helpers/README.md) collection of platform independent helpers.
-* [**library**](./packages/library/README.md) the orchestration of the executeable parts (generates the entire .sketch library out of the Dynatrace angular components).
-* [**node-helpers**](./packages/node-helpers/README.md) collection of Node.js helpers.
-* [**sketch-builder**](./packages/sketch-builder/README.md) scrapes a webpage and generates .sketch file.
-* [**sketch-color-replacer**](./packages/sketch-color-replacer/README.md) replaces a set of colors in a .sketch file.
+* [**app-builder**](./packages/app-builder/README.md) Generates an angular app with the information of the code-analyzer.
+* [**changelog-generation**](./packages/changelog-generation/README.md) `@internal` package to generate our changelog.
+* [**code-analyzer**](./packages/code-analyzer/README.md) Creates a JSON representation of the provided code. Supports [Angular](https://angular.io/).
+* [**dom-agent**](./packages/dom-agent/README.md) A DOM traverser that is injected by the browser to scrape the information out of the page.
+* [**helpers**](./packages/helpers/README.md) Collection of platform independent helpers.
+* [**node-helpers**](./packages/node-helpers/README.md) Collection of Node.js helpers.
+* [**sketch-builder**](./packages/sketch-builder/README.md) Scrapes a webpage and generates .sketch file.
+* [**sketch-color-replacer**](./packages/sketch-color-replacer/README.md) Replaces a set of colors in a .sketch file.
+* [**sketch-file-builder**](./packages/sketch-file-builder/README.md) Generates a .sketch file with all the provided resources.
 * [**sketch-file-format**](./packages/sketch-file-format/README.md) AST of the .sketch file format with all functionality to generate a .sketch file.
+* [**sketch-object-id-collector**](./packages/sketch-object-id-collector/README.md) Collects information about the symbols and their overrides in a sketch file.
 * [**sketch-svg-parser**](./packages/sketch-svg-parser/README.md) Parses SVG elements and converts it to Sketch shapes
+* [**sketch-validation-interface**](./packages/sketch-validation-interface/README.md) The Angular application that is used as interface for the Kraken validation plugin.
+* [**sketch-validation-plugin**](./packages/sketch-validation-plugin/README.md) The Kraken validation plugin. A linting plugin for Sketch.
 * [**sketch-validator**](./packages/sketch-validator/README.md) Validates Sketch JSON with the provided rules. Available in UMD, CJS, and ESM formats.
 * [**sketch-validator-nodejs-wrapper**](./packages/sketch-validator-nodejs-wrapper/README.md) A Node.js wrapper around the sketch validator package that uses a .sketch file to validate it.
 
@@ -40,14 +53,13 @@ But there's more. Sketchmine can also be used to validate Sketch files against a
 
 ### Architecture
 
-Sketchmine follows a monorepo approach. All officially maintained modules and dependencies are in the same repository.
+Sketchmine follows a mono-repo approach. All officially maintained modules and dependencies are in the same repository.
 
-> The tool for managing the monorepo @sketchmine has been extracted out as [Lerna](https://github.com/lerna/lerna)
+> The tool for managing the mono-repo @sketchmine has been extracted out as [Lerna](https://github.com/lerna/lerna)
 
 ### Dependency graph
 
 ![Dependency graph of the sketchmine mono repository](https://dt-cdn.net/images/dependency-graph-3920-82e93eaddf.png)
-
 
 ### Installation
 
@@ -160,7 +172,7 @@ process.env.SKETCH = 'open-close';
 
 ## Testing
 
-Because testing is so important and ensures good quality code, we at Dynatrace use [Jest](https://github.com/facebook/jest) as our testing library. Jest ships with a built-in mocking library. To gain confidence with the testing syntax, see the [Jest documentation](https://jestjs.io/docs/en/jest-platform). Jest follows the Jasmine convention. <!-- CT: I've inserted a link to Jest documentation, but I suspect you can find a better page to link to -->
+Because testing is so important and ensures good quality code, we at Dynatrace use [Jest](https://github.com/facebook/jest) as our testing library. Jest ships with a built-in mocking library. To gain confidence with the testing syntax, see the [Jest documentation](https://jestjs.io/docs/en/jest-platform). Jest follows the Jasmine convention.
 
 The files must contain the pattern `**/*.test.ts` for unit tests and, for end-to-end testing, `**/*.e2e.ts`. All tests should stay in the `tests` folder. Even though it's possible to place tests in the `src` folder if there's good reason.
 
@@ -191,12 +203,12 @@ describe('[${package}] › ${folder} › ${description of the suite}', () => {
   </tr>
   <tr>
     <td style="width: 50px; height: 50px;">
-      <img src="https://avatars2.githubusercontent.com/u/1374451?s=50&v=4" style="border-radius: 50%; width: 100%;">
+      <img src="https://avatars1.githubusercontent.com/u/22007416?s=460&v=4" style="border-radius: 50%; width: 100%;">
     </td>
-    <td style="line-height: 50px;"><a href="https://github.com/ddprrt">Baumi</a></td>
+    <td style="line-height: 50px;"><a href="https://github.com/lara-aigmueller">Lara Aigmüller</a></td>
   </tr>
 </table>
 
 ## License
 
-[MIT license](LICENSE) — copyright 2018 Dynatrace Austria GmbH
+[MIT license](LICENSE) — copyright 2019 Dynatrace Austria GmbH

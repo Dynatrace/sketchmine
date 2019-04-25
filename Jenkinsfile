@@ -171,6 +171,7 @@ pipeline {
             -p 4200:80 \
             -d \
             nginx:alpine
+
         '''
       }
     }
@@ -178,18 +179,13 @@ pipeline {
     stage('Generate the Sketch file 💎') {
       steps {
 
-        script {
-          def version = sh(returnStdout: true, script: "cat ./VERSION");
-          env.VERSION = version;
-        }
-
         sh '''
-
           echo "create ./_library for out dir of the generated file"
           mkdir _library
 
           docker run --rm \
             -e DOCKER=true \
+            -e DEBUG=puppeteer:* \
             --cap-add=SYS_ADMIN \
             --name sketch_builder \
             --net ${APP_NETWORK} \

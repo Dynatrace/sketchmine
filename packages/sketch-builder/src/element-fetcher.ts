@@ -160,10 +160,12 @@ export class ElementFetcher {
     browser: puppeteer.Browser,
     url: string,
   ): Promise<TraversedPage | TraversedLibrary> {
+    console.log('SKETCH-BUILDER: getPage');
     const traverser = await readFile(this.conf.agent);
     let result: any;
 
     if (this.conf.library) {
+      console.log('SKETCH-BUILDER: library await sketchGeneratorApi');
       result = await sketchGeneratorApi({
         browser,
         url,
@@ -204,6 +206,7 @@ export class ElementFetcher {
         'Something happened while traversing the DOM! check the dom-agent! 🧙🏻‍♂',
       );
     }
+    console.log('SKETCH-BUILDER: end of Get page');
     log.debug(JSON.stringify(result), 'dom-traverser');
     return result;
   }
