@@ -2,7 +2,8 @@
   "url": "http://web_server/",
   "rootElement": "ng-component > * ",
   "library": {
-    "app": "/app-shell/"
+    "app": "/app-shell/",
+    "prevBuild": "/generated/library.sketch"
   },
   "previewImage": "assets/preview.png",
   "outFile": "/generated/library.sketch",
