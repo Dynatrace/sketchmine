@@ -8,6 +8,7 @@ import {
   ColorService,
 } from '../../services';
 import { ValidationConfig } from '../../interfaces';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'validation',
@@ -26,6 +27,7 @@ export class ValidationComponent implements OnDestroy {
     private communicationService: CommunicationService,
     private validationService: ValidationService,
     private changeDetectorRef: ChangeDetectorRef,
+    private snackBar: MatSnackBar,
   ) {
     this.validationService.getRules();
 
@@ -34,10 +36,14 @@ export class ValidationComponent implements OnDestroy {
       this.communicationService.getDocumentMeta())
     .pipe(takeUntil(this.destroy$))
     .subscribe(([colors, docMeta]) => {
-      this.validationService.colorsFile = colors;
-      this.documentMeta = docMeta;
-      this.loading = false;
-      this.changeDetectorRef.markForCheck();
+      if (colors && docMeta) {
+        this.validationService.colorsFile = colors;
+        this.documentMeta = docMeta;
+        this.loading = false;
+        this.changeDetectorRef.markForCheck();
+      } else {
+        this.snackBar.open(`🤖 grrrr! Could not load the Sketch document or colors!`);
+      }
     });
   }
 

@@ -29,12 +29,17 @@ export class FileNamePipe implements PipeTransform {
 }
 
 export function fileName(value: string, format?: string): string {
-  const res = REGEX.exec(value);
-  if (format) {
-    return format
-      .replace(FormatVariables.Path, res[1])
-      .replace(FormatVariables.Filename, res[2])
-      .replace(FormatVariables.Ending, res[3]);
+  try {
+    const res = REGEX.exec(value);
+
+    if (format) {
+      return format
+        .replace(FormatVariables.Path, res[1])
+        .replace(FormatVariables.Filename, res[2])
+        .replace(FormatVariables.Ending, res[3]);
+    }
+    return res[2];
+  } catch {
+    return value;
   }
-  return res[2];
 }
