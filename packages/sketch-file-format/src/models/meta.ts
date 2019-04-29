@@ -2,7 +2,6 @@ import { SketchMeta, SketchMetaArtboard, SketchPagesAndArtboards } from '../inte
 import { Page } from './page';
 
 export class Meta {
-  private static _instance: Meta;
   private static _version = 105;
   private static _compatVersion = 99;
   private static _appVersion = '51.3';
@@ -14,10 +13,6 @@ export class Meta {
   private _pages = [];
 
   constructor(pages: Page[]) {
-    if (Meta._instance) {
-      return Meta._instance;
-    }
-    Meta._instance = this;
     this._pages = [...pages];
   }
 

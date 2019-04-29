@@ -6,8 +6,9 @@ import { main as getObjectIdMapping } from '../src/main';
 
 const TMP_FOLDER = resolve('./tests/_tmp/');
 const LIBRARY_NAME = 'library-fixture';
+const MAPPING_NAME = 'id-mapping-fixture';
 const LIBRARY_FIXTURE = resolve(`./tests/fixtures/${LIBRARY_NAME}.sketch`);
-const ID_MAPPING_FIXTURE = resolve('./tests/fixtures/id-mapping-fixture.json');
+const ID_MAPPING_FIXTURE = resolve(`./tests/fixtures/${MAPPING_NAME}.json`);
 const OUT_FILE = resolve(TMP_FOLDER, 'id-mapping-out.json');
 
 describe('[sketch-object-id-collector] › Collect IDs from Sketch file.', () => {
@@ -25,7 +26,7 @@ describe('[sketch-object-id-collector] › Collect IDs from Sketch file.', () =>
         idMappingFixture = JSON.parse(data);
         done();
       } else {
-        console.log('Failed reading library-object-id-mapping.json\n', err.message);
+        console.log(`Failed reading ${MAPPING_NAME}.json\n`, err.message);
       }
     });
   });

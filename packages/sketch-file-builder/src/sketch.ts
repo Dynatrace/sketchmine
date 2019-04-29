@@ -3,11 +3,12 @@ import { generateSketchFile } from './generate-sketch-file';
 import { Document, Meta, Page } from '@sketchmine/sketch-file-format';
 import { dirname, resolve, basename, join } from 'path';
 import chalk from 'chalk';
+import { UUID } from '@sketchmine/helpers';
 
 const log = new Logger();
 
 export class Sketch {
-  private static TMP_PATH = resolve('_sketch_tmp');
+  private static TMP_PATH = resolve('_sketch_tmp-', UUID.generate());
   private _outDir: string;
   private _fileName: string;
   libraryId: string;

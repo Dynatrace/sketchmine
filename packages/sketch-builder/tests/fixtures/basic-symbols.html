@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <ng-component>
+    <div>
+      <p>some text</p>
+      <span>more text</span>
+    </div>
+  </ng-component>
+
+  <script>
+    async function drawSymbols() {
+      if (!window.sketchGenerator) {
+        throw Error('No Sketch generator found!');
+        return;
+      }
+      const box = document.querySelector('div');
+      await window.sketchGenerator.emitDraw('box/red');
+      box.style.backgroundColor = 'blue';
+      await window.sketchGenerator.emitDraw('box/blue');
+      box.style.backgroundColor = 'green';
+      const moreText = box.querySelector('span');
+      box.removeChild(moreText);
+      await window.sketchGenerator.emitDraw('box/green');
+      const text = box.querySelector('p');
+      box.removeChild(text);
+      await window.sketchGenerator.emitDraw('box/empty');
+      await window.sketchGenerator.emitFinish();
+    }
+    
+    drawSymbols().then();
+  </script>
+</body>
+</html>

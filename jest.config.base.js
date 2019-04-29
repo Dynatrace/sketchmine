@@ -2,7 +2,7 @@ module.exports = {
   verbose: true,
   testEnvironment: 'node',
   testURL: 'http://localhost/',
-  testPathIgnorePatterns: ['lib', 'node_modules', 'fixtures'],
+  testPathIgnorePatterns: ['lib/', 'node_modules', 'fixtures'],
   roots: [
     '<rootDir>/src',
     '<rootDir>/tests',
