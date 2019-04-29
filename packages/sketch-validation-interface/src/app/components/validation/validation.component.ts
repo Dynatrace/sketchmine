@@ -42,7 +42,7 @@ export class ValidationComponent implements OnDestroy {
         this.loading = false;
         this.changeDetectorRef.markForCheck();
       } else {
-        this.snackBar.open(`🤖 grrrr! Could not load the Sketch document or colors!`);
+        this.snackBar.open('🤖 grrrr! Could not load the Sketch document or colors!');
       }
     });
   }
