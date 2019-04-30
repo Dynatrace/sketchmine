@@ -63,7 +63,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log('ANGULAR: ngOnInit!');
     // get list of mapped examples in the examples module file
     const availableExamples = this.registry.getExamplesList();
     this.metaSubscription = this.metaService.getMeta()
@@ -90,16 +89,13 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         });
 
-        console.log('ANGULAR: end of subscription!');
         if (window.sketchGenerator) {
-          console.log('ANGULAR: emit finish');
           await window.sketchGenerator.emitFinish();
         }
       });
   }
 
   ngOnDestroy(): void {
-    console.log('ANGULAR: ngOnDestroy!');
     this.metaSubscription.unsubscribe();
   }
 

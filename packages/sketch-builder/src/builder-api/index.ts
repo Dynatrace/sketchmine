@@ -17,7 +17,6 @@ declare var window: InjectedWindow;
 
 const log = new Logger();
 export async function sketchGeneratorApi(config: SketchGeneratorApiConfig): Promise<TraversedLibrary> {
-  console.log('SKETCH-BUILDER: inside sketchGeneratorApi');
   const componentSelectors = getComponentSelectors(config.metaInformation);
   const page = await config.browser.newPage();
   let resolveFinish;
@@ -121,9 +120,7 @@ export async function sketchGeneratorApi(config: SketchGeneratorApiConfig): Prom
   await page.evaluateOnNewDocument(config.traverser);
   await page.goto(config.url, { waitUntil: 'networkidle0', timeout: 0 });
 
-  console.log('SKETCH-BUILDER: sketchGeneratorApi wait for finished');
   await finished;
-  console.log('SKETCH-BUILDER: sketchGeneratorApi after finished');
 
   return await page.evaluate(() => window.library);
 }

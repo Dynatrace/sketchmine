@@ -33,6 +33,26 @@ pipeline {
       }
     }
 
+    stage('Clone the global ressources 🧸') {
+
+      steps {
+        checkout changelog: false, poll: false, scm: [
+          $class: 'GitSCM',
+          branches: [[name: '*/master']],
+          doGenerateSubmoduleConfigurations: false,
+          extensions: [
+            [$class: 'RelativeTargetDirectory', relativeTargetDir: 'ux-global-resources'],
+          ],
+          submoduleCfg: [],
+          userRemoteConfigs: [[
+            credentialsId: 'Buildmaster',
+            name: 'origin',
+            url: 'https://bitbucket.lab.dynatrace.org/scm/ux/global-resources.git'
+          ]]
+        ]
+      }
+    }
+
     stage('Build ⚒') {
       steps {
         nodejs(nodeJSInstallationName: 'Node 10.x') {
@@ -171,25 +191,23 @@ pipeline {
             -p 4200:80 \
             -d \
             nginx:alpine
-
         '''
       }
     }
 
     stage('Generate the Sketch file 💎') {
       steps {
-
         sh '''
           echo "create ./_library for out dir of the generated file"
           mkdir _library
 
           docker run --rm \
             -e DOCKER=true \
-            -e DEBUG=puppeteer:* \
             --cap-add=SYS_ADMIN \
             --name sketch_builder \
             --net ${APP_NETWORK} \
             -v ${APP_VOL_NAME}:/app-shell \
+            -v $(pwd)/ux-global-resources:/global-resources \
             -v $(pwd)/_library:/generated \
             sketchmine/sketch-builder \
             /bin/sh -c 'node ./lib/bin --config="config.json"'
@@ -204,21 +222,6 @@ pipeline {
 
       steps {
 
-        checkout changelog: false, poll: false, scm: [
-          $class: 'GitSCM',
-          branches: [[name: '*/master']],
-          doGenerateSubmoduleConfigurations: false,
-          extensions: [
-            [$class: 'RelativeTargetDirectory', relativeTargetDir: 'ux-global-ressources'],
-          ],
-          submoduleCfg: [],
-          userRemoteConfigs: [[
-            credentialsId: 'Buildmaster',
-            name: 'origin',
-            url: 'https://bitbucket.lab.dynatrace.org/scm/ux/global-resources.git'
-          ]]
-        ]
-
         script {
           def version = sh(returnStdout: true, script: "cat ./VERSION");
           env.VERSION = version;
@@ -231,7 +234,7 @@ pipeline {
               yarn get-branch-name \
                 --prefix ${FEATURE_BRANCH_PREFIX} \
                 --version ${VERSION} \
-                --cwd="../../ux-global-ressources" \
+                --cwd="../../ux-global-resources" \
                 --file="../../BRANCH"
             '''
           }
@@ -244,7 +247,7 @@ pipeline {
 
         sh 'echo "\nBranch Name for changes:\t$FEAT_BRANCH_NAME"'
 
-        dir('ux-global-ressources') {
+        dir('ux-global-resources') {
           sh 'cp ../_library/library.sketch ./components-library.sketch'
         }
 
@@ -263,7 +266,7 @@ pipeline {
                     --password $GIT_PASS \
                     -v ${VERSION} \
                     -b ${FEAT_BRANCH_NAME} \
-                    --cwd="../../ux-global-ressources"
+                    --cwd="../../ux-global-resources"
                 '''
               }
             }

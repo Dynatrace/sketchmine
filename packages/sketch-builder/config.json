@@ -3,7 +3,7 @@
   "rootElement": "ng-component > * ",
   "library": {
     "app": "/app-shell/",
-    "prevBuild": "/generated/library.sketch"
+    "prevBuild": "/global-resources/components-library.sketch"
   },
   "previewImage": "assets/preview.png",
   "outFile": "/generated/library.sketch",

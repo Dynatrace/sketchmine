@@ -160,12 +160,10 @@ export class ElementFetcher {
     browser: puppeteer.Browser,
     url: string,
   ): Promise<TraversedPage | TraversedLibrary> {
-    console.log('SKETCH-BUILDER: getPage');
     const traverser = await readFile(this.conf.agent);
     let result: any;
 
     if (this.conf.library) {
-      console.log('SKETCH-BUILDER: library await sketchGeneratorApi');
       result = await sketchGeneratorApi({
         browser,
         url,
@@ -206,7 +204,6 @@ export class ElementFetcher {
         'Something happened while traversing the DOM! check the dom-agent! 🧙🏻‍♂',
       );
     }
-    console.log('SKETCH-BUILDER: end of Get page');
     log.debug(JSON.stringify(result), 'dom-traverser');
     return result;
   }
@@ -229,25 +226,27 @@ export class ElementFetcher {
            * @see https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#tips
            */
         args: ['--disable-dev-shm-usage', '--no-sandbox'],
-        executablePath: '/usr/bin/chromium-browser',
       }
       : {
         ...this.conf.chrome,
         headless: process.env.DEBUG ? false : true,
         devtools: process.env.DEBUG ? true : false,
       };
-    const browser = await puppeteer.launch(options);
     const host = new URL(this.conf.url);
     const confPages = this.conf.pages || [host.pathname];
 
     for (let i = 0, max = confPages.length; i < max; i += 1) {
+      // it is considered as best practice to start always a new headless chrome for each site
+      // in case if only one page is crashing not the whole browser crashes.
+      const browser = await puppeteer.launch(options);
+
       const page = confPages[i].startsWith('/') ? confPages[i] : `/${confPages[i]}`;
       const url = host.protocol !== 'file:' ? `${host.origin}${page}` : host.href;
 
       log.debug(chalk`🛬\t{cyanBright Fetching Page}: ${url}`);
       this.result.push(await this.getPage(browser, url));
-    }
 
-    await browser.close();
+      await browser.close();
+    }
   }
 }
