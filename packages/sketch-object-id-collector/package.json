@@ -1,7 +1,7 @@
 {
   "name": "@sketchmine/sketch-object-id-collector",
   "version": "3.0.0-alpha.1",
-  "description": "> TODO: description",
+  "description": "The object ID collector gets a Sketch file and collects object IDs that need to be preserved when generating a new library version.",
   "author": "Lara Aigmueller <lara.aigmueller@dynatrace.com>",
   "homepage": "https://github.com/dynatrace/sketchmine/tree/master/packages/sketch-object-id-collector#readme",
   "license": "MIT",
