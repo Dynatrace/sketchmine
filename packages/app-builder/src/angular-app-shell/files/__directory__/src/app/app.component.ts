@@ -36,11 +36,14 @@ const BLACKLIST = [
   'expandable-section',
   'button-group',
   'context-dialog',
+  'key-value-list',
   'checkbox',
   'progress-circle',
   'switch',
   'breadcrumbs',
   'radio',
+  'pagination',
+  'show-more',
 ];
 
 declare var window: any;
