@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/app-builder",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0",
   "description": "Generates the example library out of the angular components",
   "keywords": [
     "angular",
@@ -39,14 +39,14 @@
     "@angular-devkit/schematics": "^7.1.2",
     "@angular-devkit/schematics-cli": "^0.11.4",
     "@angular/cli": "^7.1.2",
-    "@sketchmine/code-analyzer": "^3.0.0-alpha.1",
+    "@sketchmine/code-analyzer": "^3.0.0",
     "chalk": "^2.4.0",
     "lodash": "^4.17.0",
     "minimist": "^1.2.0",
     "typescript": "^3.2.1"
   },
   "devDependencies": {
-    "@sketchmine/node-helpers": "^3.0.0-alpha.1",
+    "@sketchmine/node-helpers": "^3.0.0",
     "@types/jest": "^23.3.0",
     "@types/lodash": "^4.14.118",
     "@types/minimist": "^1.2.0",

@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/sketch-validation-plugin",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0",
   "description": "Sketch plugin for our validation",
   "author": "Lukas Holzer <lukas.holzer@dynatrace.com>",
   "homepage": "https://github.com/dynatrace/sketchmine/tree/master/packages/sketch-validaton-plugin#readme",

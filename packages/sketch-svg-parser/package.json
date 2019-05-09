@@ -1,6 +1,6 @@
 {
   "name": "@sketchmine/sketch-svg-parser",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0",
   "description": "Parse svg to sketch shapes with points",
   "keywords": [
     "sketch",
@@ -51,9 +51,9 @@
     "typescript": "^3.2.1"
   },
   "dependencies": {
-    "@sketchmine/helpers": "^3.0.0-alpha.1",
-    "@sketchmine/node-helpers": "^3.0.0-alpha.1",
-    "@sketchmine/sketch-file-format": "^3.0.0-alpha.1",
+    "@sketchmine/helpers": "^3.0.0",
+    "@sketchmine/node-helpers": "^3.0.0",
+    "@sketchmine/sketch-file-format": "^3.0.0",
     "chalk": "^2.4.1",
     "svg-arc-to-cubic-bezier": "^3.1.0",
     "svg-path-parser": "^1.1.0",
