@@ -37,17 +37,13 @@ The default sketchlint file has following configuration inside:
 
 ```json
 {
-  "version": "2.0.1",
+  "version": "2.4.0",
   "rules": {
     "artboard-validation": true,
     "color-palette-validation":  true,
-    "page-validation": {
-      "warning": true
-    },
+    "page-validation": true,
     "symbol-name-validation": true,
-    "text-style-validation": {
-      "warning": true
-    }
+    "text-validation": true
   }
 }
 ```

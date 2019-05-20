@@ -4,7 +4,6 @@ import { artboardValidation } from './rules/artboard-validation';
 import { colorValidation } from './rules/color-validation';
 import { pageValidation } from './rules/page-validation';
 import { symbolNameValidation } from './rules/symbol-name-validation';
-import { textStyleValidation } from './rules/text-style-validation';
 import { textValidation } from './rules/text-validation';
 
 // Valid artboard sizes
@@ -22,13 +21,6 @@ export const DYNATRACE_LOGO_COLORS = [
   '#B4DC00', // logo-limegreen
   '#73BE28', // logo-green
   '#1A1A1A', // logo-dark-gray
-];
-
-// Available headline text styles
-export const HEADLINE_TEXT_STYLES = [
-  '1920-H1', '1920-H2', '1920-H3',
-  '1280-H1', '1280-H2', '1280-H3',
-  '360-H1', '360-H2', '360-H3',
 ];
 
 // Valid text colors
@@ -113,23 +105,6 @@ export const rules: IValidationRule[] = [
   },
   {
     selector: [SketchObjectTypes.Text],
-    name: 'text-style-validation',
-    description: 'Check if text styles from the Sketch library are used correctly and have not been modified.',
-    env: ['product'],
-    validation: textStyleValidation,
-    includePages: ARTBOARD_SIZES,
-    options: {
-      requirements: [
-        ValidationRequirements.AttributedString,
-        ValidationRequirements.DocumentReference,
-        ValidationRequirements.Style,
-      ],
-      HEADLINE_TEXT_STYLES,
-      VALID_TEXT_COLORS,
-    },
-  },
-  {
-    selector: [SketchObjectTypes.Text],
     name: 'text-validation',
     description: 'Check if only valid font families, colors and sizes are used.',
     env: ['product'],
@@ -140,7 +115,6 @@ export const rules: IValidationRule[] = [
         ValidationRequirements.AttributedString,
         ValidationRequirements.Style,
       ],
-      HEADLINE_TEXT_STYLES,
       VALID_TEXT_COLORS,
     },
   },

@@ -5,9 +5,6 @@
     "color-palette-validation":  true,
     "page-validation": true,
     "symbol-name-validation": true,
-    "text-validation": true,
-    "text-style-validation": {
-      "warning": true
-    }
+    "text-validation": true
   }
 }
