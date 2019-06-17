@@ -64,12 +64,12 @@
     "@sketchmine/sketch-file-format": "^3.0.0",
     "@sketchmine/sketch-object-id-collector": "^3.0.0",
     "@sketchmine/sketch-svg-parser": "^3.0.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "chalk": "^2.4.0",
     "inquirer": "^6.2.1",
     "inquirer-fuzzy-path": "^1.0.0",
     "ora": "^3.0.0",
-    "puppeteer": "1.4.0",
+    "puppeteer": "1.13.0",
     "rxjs": "^6.3.3"
   },
   "bin": {

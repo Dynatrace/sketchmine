@@ -27,7 +27,7 @@
   "dependencies": {
     "@sketchmine/helpers": "^3.0.0",
     "chalk": "^2.4.0",
-    "unzipper": "^0.8.0"
+    "unzipper": "^0.10.1"
   },
   "devDependencies": {
     "@types/jest": "^23.3.0",

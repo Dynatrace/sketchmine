@@ -4,16 +4,16 @@
   "author": "Lukas Holzer <lukas.holzer@dynatrace.com>",
   "homepage": "https://github.com/dynatrace/sketchmine#readme",
   "license": "MIT",
-  "engines" : {
-    "node" : ">=10.6.0"
+  "engines": {
+    "node": ">=10.6.0"
   },
   "private": true,
   "workspaces": [
     "packages/*"
   ],
   "bugs": {
-    "url" : "https://github.com/dynatrace/sketchmine/issues",
-    "email" : "lukas.holzer@dynatrace.com"
+    "url": "https://github.com/dynatrace/sketchmine/issues",
+    "email": "lukas.holzer@dynatrace.com"
   },
   "scripts": {
     "build": "lerna run build",
