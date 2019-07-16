@@ -41,7 +41,7 @@
     "@angular/cli": "^7.1.2",
     "@sketchmine/code-analyzer": "^3.0.0",
     "chalk": "^2.4.0",
-    "lodash": "^4.17.0",
+    "lodash": "^4.17.13",
     "minimist": "^1.2.0",
     "typescript": "^3.2.1"
   },
